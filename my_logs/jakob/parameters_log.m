@@ -1,13 +1,13 @@
 
-% 2016-08-24 12:01:34
+% 2016-10-10 10:16:13
 
-% my_logs/aio_network_test_data2/
+% my_logs\jakob\
 max_time = 2;
 max_flows = 2;
 max_nets = 2;
-max_rep = 1000;
+max_rep = 25;
 evaluate_max_only = 1;
 
-scheduler_logs= {'Optimization_log.m', 'Greedy_0_H2_FNGT_log.m', 'Greedy_0_H2_log.m', 'Random_log.m'};
-schedulers= {'Optimization', 'Greedy_0_H2_FNGT', 'Greedy', 'Random123'};
+scheduler_logs= {'Greedy_0_H2_log.m','Greedy_0_log.m'};
+schedulers= {'Greedy_0_H2','Greedy_0'};
 
