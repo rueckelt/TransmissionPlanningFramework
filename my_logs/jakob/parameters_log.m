@@ -1,7 +1,7 @@
 
-% 2016-10-10 10:16:13
+% 2016-10-14 11:41:20
 
-% my_logs\jakob\
+% my_logs/jakob/
 max_time = 2;
 max_flows = 2;
 max_nets = 2;
