@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -17,9 +18,9 @@ import schedulingIOModel.NetworkGenerator;
 
 public class NetworkInformationExtractor {
 	static String rootPath = "/home/jakob/222/2_2_2/";
-	static int numberOfFlows = 4;
+	static int numberOfFlows = 16;
 	static int numberOfTimeslots = 100;
-	static int numberOfNetworks = 4;
+	static int numberOfNetworks = 16;
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		timestepAsInstancesWithCS();
@@ -305,19 +306,26 @@ public class NetworkInformationExtractor {
 		// Lines represent a network
 		// The numbers between the ; tell how much each flow has
 		// allocated in each timestep
-		int[][][] schedule = new int[4][100][4];
+		int[][][] schedule = new int[numberOfFlows][numberOfTimeslots][numberOfNetworks];
 		int networkNumber = 0;
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
 			String line;
 			while ((line = br.readLine()) != null) {
 				if (line.startsWith("schedule_f_t_n")) {
-					line = line.substring(25);
+					if (networkNumber >= 9) {
+						line = line.substring(26);
+					} else {
+						line = line.substring(25);
+					}
 					line = line.substring(0, line.length() - 2);
 					line = line.replaceAll(" ", "");
 					String[] lines = line.split(";");
-					for (int x = 0; x < 100; x++) {
+					for (int x = 0; x < numberOfTimeslots; x++) {
 						String[] allocated = lines[x].split(",");
-						for (int y = 0; y < 4; y++) {
+						System.out.println(Arrays.toString(allocated));
+						for (int y = 0; y < numberOfFlows; y++) {
+							System.out.println("y:" + y + " x: " + x + "networkNumber:" + networkNumber);
+
 							schedule[y][x][networkNumber] = Integer.parseInt(allocated[y]);
 						}
 					}

@@ -11,14 +11,14 @@ public class main {
 		//		int t=1;
 		//		int n=2;
 		//		int rep=3;
-		int f = 2;
+		int f = 4;
 		int t = 2;
-		int n = 2;//5;
+		int n = 4;//5;
 		int rep = 1000;
 		//		String logpath= "my_logs"+File.separator+"short_test";
 		//		String logpath= "my_logs"+File.separator+"test";
 
-		String logpath = "my_logs" + File.separator + "jakob";
+		String logpath = "my_logs" + File.separator + "jakob_large";
 
 		//		for(int rep1 = 0; rep1<=rep; rep1++){
 

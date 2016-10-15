@@ -3,10 +3,10 @@
 %stores results.mat file in in_folder for extracted log matrices
 %delete this file to read logs from raw files
 
-in_folder = '..\my_logs\jakob';% 'logs_time';
+in_folder = '../my_logs/jakob';% 'logs_time';
 %in_folder = '..\my_logs\eval_4_4_3_c10';% 'logs_time';
 out_folder = [in_folder filesep 'test_plotting'];
-force_read_data = 0;
+force_read_data = 1;
 max_only=1;
 
 %get paramters from file
@@ -40,7 +40,7 @@ else
     save(data_file, 'raw_values');
     save(avail_file, 'avail');
 end
-raw_values(2,:,:,:,:,:)=raw_values(2,:,:,:,:,:)./(1000*1000);     %time: µs to seconds
+raw_values(2,:,:,:,:,:)=raw_values(2,:,:,:,:,:)./(1000*1000);     %time: ï¿½s to seconds
 state='gathered data'
 %calculate relative
 % %plot

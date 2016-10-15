@@ -23,7 +23,8 @@ function [] = plot_data5(out_folder, data, avail, vartypes, schedulers)
     scale_n = [1 2 4 8 16 32 64];
     scale_t = [25 50 100 200 400 800 1600];
     scale_s = schedulers; %{'Opt' 'TS' 'ONS' 'NS' 'Rnd'};
-   
+    
+    
     addpath('matlab2tikz'); 
     
     legendlabels2=scale_s;
@@ -54,7 +55,7 @@ function [] = plot_data5(out_folder, data, avail, vartypes, schedulers)
                 %create path and labels
 
                 filename = [out_folder filesep 'vary_n__f_' num2str(scale_f(f)) ...
-                    '_t_' num2str(scale_t(t)) '__' vartypes{v} '.tikz']
+                    '_t_' num2str(scale_t(t)) '__' vartypes{v} '.tikz'];
                 
                 labels = {'cost function value','execution time in s'}
                 my_ylabel=labels{v};
@@ -93,11 +94,11 @@ function [] = plot_data5(out_folder, data, avail, vartypes, schedulers)
             % v_x - v_opt   detail cost difference
             %-------------
             % c_x - c_opt   total cost difference
-             detail_cost_share=squeeze(data(3:end, s, f,t,:,:))
+             detail_cost_share=squeeze(data(3:end, s, f,t,:,:));
              for v=1:nof_vartypes-2
-                 v
+                 
                  detail_cost_share(v,:) = (squeeze(detail_cost_share(v,1,:))-squeeze(data(v+2,1,f,t,1,:))) ./ ...
-                                            (squeeze(data(1,s,f,t,1,:))-squeeze(data(1,1,f,t,1,:)))
+                                            (squeeze(data(1,s,f,t,1,:))-squeeze(data(1,1,f,t,1,:)));
              end
              %detail_cost_share
              %get relevant data for plot
@@ -109,12 +110,12 @@ function [] = plot_data5(out_folder, data, avail, vartypes, schedulers)
                  %['plot for n:' num2str(n) ' f:' num2str(f)]
                  %squeezed_data=squeeze(data_rel_sq(s,:,:));
                  filename = [out_folder filesep 'vary_n__f_' num2str(scale_f(f)) ...
-                '_t_' num2str(scale_t(t)) '__detail_' schedulers{s} '.tikz']
+                '_t_' num2str(scale_t(t)) '__detail_' schedulers{s} '.tikz'];
 
                 %my_ylabel=[schedulers{s} ' detail cost relative to optimal schedule'];
                 % tikz_out_errorbar(filename, data_rel_sq, my_ylabel,legendlabels, 0,1);
                 my_ylabel = ['Relative Detail Score RDS(' scale_s{s} ')'];
-                tikz_out_errorbar(filename, detail_cost_share, my_ylabel,legendlabels,0, 0,1,2);
+                %%%%tikz_out_errorbar(filename, detail_cost_share, my_ylabel,legendlabels,0, 0,1,2);
              end
          end
       end

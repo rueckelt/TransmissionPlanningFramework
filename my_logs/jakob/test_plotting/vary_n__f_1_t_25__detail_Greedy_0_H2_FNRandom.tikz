@@ -1,0 +1,83 @@
+% This file was created by matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.90000,0.70000,0.10000}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmin=0.5,
+xmax=5.5,
+xtick={0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5},
+xticklabels={{},{time limits},{},{min. throughput},{},{unscheduled tokens},{},{latency jitter},{},{monetary cost},{},{},{}},
+xlabel={schedulers},
+every outer y axis line/.append style={white!85!black},
+every y tick label/.append style={font=\color{white!85!black}},
+ymin=-1.13509159067908,
+ymax=3.39393099226015,
+ylabel={$\text{Relative Detail Score RDS(Greedy}_\text{0}_\text{H}\text{2}_\text{F}\text{NRandom)}$},
+ymajorgrids,
+axis background/.style={fill=white},
+legend style={at={(0.03,0.97)},anchor=north west,legend cell align=left,align=left,draw=black}
+]
+\addplot [color=black,solid,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	-0.0374707673071329	0.0202954545393428	0.0202954545393428\\
+2	0.274427702285762	0.31174312780496	0.31174312780496\\
+3	0.942415180250065	1.40365419150228	1.40365419150228\\
+4	-0.0581334161374748	0.104036799252509	0.104036799252509\\
+5	0.836607185770769	1.67741577145898	1.67741577145898\\
+};
+\addlegendentry{$\text{Relative Detail Score RDS(Greedy}_\text{0}_\text{H}\text{2}_\text{F}\text{NRandom)}$};
+
+\addplot [color=mycolor1,solid]
+  table[row sep=crcr]{%
+0.5	0\\
+5.5	0\\
+};
+\addlegendentry{Ref Opt};
+
+\end{axis}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmin=0.5,
+xmax=5.5,
+xtick={0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5},
+xticklabels={{},{time limits},{},{min. throughput},{},{unscheduled tokens},{},{latency jitter},{},{monetary cost},{},{},{}},
+xlabel={schedulers},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+ymin=-1.13509159067908,
+ymax=3.39393099226015,
+ylabel={$\text{Relative Detail Score RDS(Greedy}_\text{0}_\text{H}\text{2}_\text{F}\text{NRandom)}$}
+]
+\addplot [color=black,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	-0.0374707673071329	0.0202954545393428	0.0202954545393428\\
+2	0.274427702285762	0.31174312780496	0.31174312780496\\
+3	0.942415180250065	1.40365419150228	1.40365419150228\\
+4	-0.0581334161374748	0.104036799252509	0.104036799252509\\
+5	0.836607185770769	1.67741577145898	1.67741577145898\\
+};
+\addplot [color=mycolor1,solid,forget plot]
+  table[row sep=crcr]{%
+0.5	0\\
+5.5	0\\
+};
+\end{axis}
+\end{tikzpicture}%
