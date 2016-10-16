@@ -14,7 +14,7 @@ public class main {
 		int f = 4;
 		int t = 2;
 		int n = 4;//5;
-		int rep = 1000;
+		int rep = 13600;
 		//		String logpath= "my_logs"+File.separator+"short_test";
 		//		String logpath= "my_logs"+File.separator+"test";
 
@@ -36,7 +36,7 @@ public class main {
 		eval.evaluateTop();
 		//			eval.calculateInstance_t_n_i(t, n, f, rep, logpath+File.separator, false ,true, decomp);	//recalc
 		//			eval.calculateInstance_t_n_i(t, n, f, rep, logpath+File.separator, true ,false, decomp);	//overwrite
-		eval.parallel(4);
+		eval.parallel(10);
 		eval.start();
 		//		}
 

@@ -44,7 +44,7 @@ public class MLPrioGT extends MLPrio {
 		int window = flow.getWindowMax();
 		int numWindows = flow.getDeadline() - flow.getStartTime() - window;
 		List<Integer> scheduledPerWindow = new ArrayList<Integer>(numWindows);
-		int windowScheduledSum;
+		int windowScheduledSum = 0;
 		if (window < flow.getDeadline() - flow.getStartTime()) {
 			for (int t = flow.getStartTime(); t + window < flow.getDeadline(); t++) {
 				int currentWindowScheduled = 0;
@@ -55,7 +55,9 @@ public class MLPrioGT extends MLPrio {
 				}
 				scheduledPerWindow.add(currentWindowScheduled);
 			}
-			windowScheduledSum = scheduledPerWindow.stream().reduce((a, b) -> a + b).get();
+			for(int x : scheduledPerWindow){
+				windowScheduledSum += x;
+			}
 		} else { //If the throughputwindow is larger than the flows sending time
 			//scheduled was calculated earlier and is now used
 			numWindows = 1;

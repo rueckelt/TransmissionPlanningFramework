@@ -322,10 +322,7 @@ public class NetworkInformationExtractor {
 					String[] lines = line.split(";");
 					for (int x = 0; x < numberOfTimeslots; x++) {
 						String[] allocated = lines[x].split(",");
-						System.out.println(Arrays.toString(allocated));
 						for (int y = 0; y < numberOfFlows; y++) {
-							System.out.println("y:" + y + " x: " + x + "networkNumber:" + networkNumber);
-
 							schedule[y][x][networkNumber] = Integer.parseInt(allocated[y]);
 						}
 					}

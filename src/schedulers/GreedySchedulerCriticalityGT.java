@@ -48,7 +48,7 @@ public class GreedySchedulerCriticalityGT extends GreedyScheduler {
 		int window = f.getWindowMax();
 		int numWindows = f.getDeadline() - f.getStartTime() - window;
 		List<Integer> scheduledPerWindow = new ArrayList<Integer>(numWindows);
-		int windowScheduledSum;
+		int windowScheduledSum = 0;
 		if (window < f.getDeadline() - f.getStartTime()) {
 			for (int t = f.getStartTime(); t + window < f.getDeadline(); t++) {
 				int currentWindowScheduled = 0;
@@ -59,7 +59,9 @@ public class GreedySchedulerCriticalityGT extends GreedyScheduler {
 				}
 				scheduledPerWindow.add(currentWindowScheduled);
 			}
-			windowScheduledSum = scheduledPerWindow.stream().reduce((a, b) -> a + b).get();
+			for(int x : scheduledPerWindow){
+				windowScheduledSum += x;
+			}
 		} else { //If the throughputwindow is larger than the flows sending time
 			//scheduled was calculated earlier and is now used
 			numWindows = 1;
