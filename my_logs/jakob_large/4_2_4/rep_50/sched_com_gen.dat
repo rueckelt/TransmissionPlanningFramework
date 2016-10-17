@@ -10,7 +10,7 @@ nTime = 100;
 nInterfaceTypes = 2;
 nFlows = 16;
 
-//channel model: generated Sun Oct 16 12:29:16 CEST 2016
+//channel model: generated Sun Oct 16 15:06:12 CEST 2016
 availChunkBuckets = //[Networks, Time]  
 [
 	[59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59, 59],
@@ -43,7 +43,7 @@ network_type= //[Networks] 				//each channel has a specific type; e.g. WiFi, LT
 nClientInterfaces = //[InterfaceTypes]
 	[1, 1];	
 
-//requests: generated Sun Oct 16 12:29:16 CEST 2016
+//requests: generated Sun Oct 16 15:06:12 CEST 2016
 nChunks = 				[950, 2090, 570, 1900, 575, 1265, 345, 1150, 475, 1045, 285, 950, 500, 1100, 300, 1000];		//[Flows]		
 deadline= 				[64, 60, 82, 94, 95, 65, 97, 33, 90, 70, 75, 17, 63, 51, 94, 70];		//[Flows] 
 prefStartTime = 		[14, 0, 46, 85, 45, 0, 41, 31, 40, 0, 20, 10, 13, 0, 24, 67];		//[Flows]

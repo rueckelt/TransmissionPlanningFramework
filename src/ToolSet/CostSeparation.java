@@ -126,6 +126,10 @@ public class CostSeparation {
 		return timeMatch[f][t];
 	}
 
+	public int[][] getTimeMatch() {
+		return timeMatch;
+	}
+
 	/**
 	 * 
 	 * @param f
@@ -150,6 +154,10 @@ public class CostSeparation {
 			return Integer.MAX_VALUE; //invalid request - return worst case
 		}
 		return networkMatch[f][n];
+	}
+
+	public int[][] getNetworkMatch() {
+		return networkMatch;
 	}
 
 	public int[] getNetworkMatch(int f) {

@@ -24,7 +24,7 @@ public class MLPrioGT extends MLPrio {
 	 * Result is not normalized yet
 	 */
 	@Override
-	protected double calculateFlowPrio(int flowID) {
+	protected double calculateFlowCriticality(int flowID) {
 		Flow flow = fg.getFlows().get(flowID);
 		double result = 0;
 
@@ -55,7 +55,7 @@ public class MLPrioGT extends MLPrio {
 				}
 				scheduledPerWindow.add(currentWindowScheduled);
 			}
-			for(int x : scheduledPerWindow){
+			for (int x : scheduledPerWindow) {
 				windowScheduledSum += x;
 			}
 		} else { //If the throughputwindow is larger than the flows sending time

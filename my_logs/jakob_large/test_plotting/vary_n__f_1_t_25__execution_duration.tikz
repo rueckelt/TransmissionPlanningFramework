@@ -1,0 +1,72 @@
+% This file was created by matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmin=0.5,
+xmax=5.5,
+xtick={0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5},
+xticklabels={{},{Optimization},{},{Greedy\_0\_H2},{},{Greedy\_0},{},{Greedy\_0\_H2\_FNGT},{},{Random},{},{},{}},
+xlabel={schedulers},
+every outer y axis line/.append style={white!85!black},
+every y tick label/.append style={font=\color{white!85!black}},
+ymode=log,
+ymin=-85.4291894495036,
+ymax=3213.6469533295,
+ylabel={execution time in s},
+ymajorgrids,
+axis background/.style={fill=white},
+legend style={at={(0.03,0.97)},anchor=north west,legend cell align=left,align=left,draw=black}
+]
+\addplot [color=black,solid,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	1421.9171654	1499.58006489955	1499.58006489955\\
+2	0.24480079	0.272772758692883	0.272772758692883\\
+3	0.2113276	0.148364322496145	0.148364322496145\\
+4	0.39944723	0.295799302684062	0.295799302684062\\
+5	0.15498563	0.112496022392052	0.112496022392052\\
+};
+\addlegendentry{execution time in s};
+
+\end{axis}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmin=0.5,
+xmax=5.5,
+xtick={0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5},
+xticklabels={{},{Optimization},{},{Greedy\_0\_H2},{},{Greedy\_0},{},{Greedy\_0\_H2\_FNGT},{},{Random},{},{},{}},
+xlabel={schedulers},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+ymode=log,
+ymin=-85.4291894495036,
+ymax=3213.6469533295,
+yminorticks=true,
+ylabel={execution time in s}
+]
+\addplot [color=black,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	1421.9171654	1499.58006489955	1499.58006489955\\
+2	0.24480079	0.272772758692883	0.272772758692883\\
+3	0.2113276	0.148364322496145	0.148364322496145\\
+4	0.39944723	0.295799302684062	0.295799302684062\\
+5	0.15498563	0.112496022392052	0.112496022392052\\
+};
+\end{axis}
+\end{tikzpicture}%

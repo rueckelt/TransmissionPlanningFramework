@@ -9,9 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import schedulers.GreedyScheduler;
-import schedulers.GreedySchedulerCriticalityGT;
 import schedulers.GreedySchedulerFNGT;
-import schedulers.GreedySchedulerFNRandom;
 import schedulers.OptimizationScheduler;
 import schedulers.RandomScheduler;
 import schedulers.Scheduler;
@@ -105,8 +103,9 @@ public class EvaluationScenarioCreator {
 		//		schedulers.add(new GreedyOnlineOpppertunisticScheduler(ng, tg).newRating(true));
 		//		schedulers.add(new GreedyOnlineScheduler(ng, tg).newRating(true));
 		schedulers.add(new GreedySchedulerFNGT(ng, tg, schedule));
-		schedulers.add(new GreedySchedulerFNRandom(ng, tg));
-		schedulers.add(new GreedySchedulerCriticalityGT(ng, tg, schedule));
+		//schedulers.add(new GreedySchedulerFNCritGT(ng, tg, schedule));
+		//schedulers.add(new GreedySchedulerFNRandom(ng, tg));
+		//schedulers.add(new GreedySchedulerCriticalityGT(ng, tg, schedule));
 		schedulers.add(new RandomScheduler(ng, tg, 200)); //200 random runs of this scheduler. Returns average duration and cost
 
 		return schedulers;

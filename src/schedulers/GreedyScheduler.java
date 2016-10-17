@@ -129,7 +129,7 @@ public class GreedyScheduler extends Scheduler {
 
 		//############## 2. Network choice according to flow matching #################
 		//try to allocate in networks in descending order according to match
-		for (int n1 = 0; n1 < ng.getNetworks().size() && chunksToAllocate > 0; n1++) {
+		for (int n1 = 0; n1 < networkIDs.size() && chunksToAllocate > 0; n1++) {
 			int n = networkIDs.get(n1);
 			//Network net = ng_tmp.getNetworks().get(n);
 			//			System.out.println("########### Flow "+flowIndex +"   Network "+n);

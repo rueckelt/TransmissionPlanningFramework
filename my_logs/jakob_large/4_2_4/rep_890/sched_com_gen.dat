@@ -10,7 +10,7 @@ nTime = 100;
 nInterfaceTypes = 2;
 nFlows = 16;
 
-//channel model: generated Wed Sep 14 04:08:02 CEST 2016
+//channel model: generated Sun Oct 16 14:43:54 CEST 2016
 availChunkBuckets = //[Networks, Time]  
 [
 	[58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58, 58],
@@ -43,7 +43,7 @@ network_type= //[Networks] 				//each channel has a specific type; e.g. WiFi, LT
 nClientInterfaces = //[InterfaceTypes]
 	[1, 1];	
 
-//requests: generated Wed Sep 14 04:08:02 CEST 2016
+//requests: generated Sun Oct 16 14:43:54 CEST 2016
 nChunks = 				[1075, 2365, 645, 2150, 425, 935, 255, 850, 775, 1705, 465, 1550, 1025, 2255, 615, 2050];		//[Flows]		
 deadline= 				[94, 89, 44, 61, 98, 54, 75, 22, 45, 68, 59, 51, 61, 82, 74, 40];		//[Flows] 
 prefStartTime = 		[44, 0, 2, 54, 65, 0, 47, 19, 12, 0, 20, 46, 28, 0, 36, 34];		//[Flows]
@@ -55,6 +55,7 @@ latency = 				[10, 10, 4, 10, 10, 10, 4, 10, 10, 10, 4, 10, 10, 10, 4, 10];
 jitter = 				[10, 10, 4, 10, 10, 10, 4, 10, 10, 10, 4, 10, 10, 10, 4, 10];
 
 hysteresis = 500;
+tpMinAmp = 100;
 importance = [
 	[9, 0, 20, 8, 9, 0, 20, 9, 6, 0, 20, 7, 8, 0, 20, 8],	//deadline
 	[3, 0, 10, 7, 2, 0, 10, 7, 5, 0, 10, 9, 4, 0, 10, 9],	//start time

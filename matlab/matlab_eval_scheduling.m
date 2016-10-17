@@ -3,7 +3,7 @@
 %stores results.mat file in in_folder for extracted log matrices
 %delete this file to read logs from raw files
 
-in_folder = '../my_logs/jakob';% 'logs_time';
+in_folder = '../my_logs/jakob_large';% 'logs_time';
 %in_folder = '..\my_logs\eval_4_4_3_c10';% 'logs_time';
 out_folder = [in_folder filesep 'test_plotting'];
 force_read_data = 1;
