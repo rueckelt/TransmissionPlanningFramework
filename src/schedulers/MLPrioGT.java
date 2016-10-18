@@ -11,7 +11,7 @@ public class MLPrioGT extends MLPrio {
 	protected int[][][] optimalSchedule;
 
 	public MLPrioGT(NetworkGenerator ng, FlowGenerator tg, int[][][] schedule) {
-		super(ng, tg);
+		super(ng, tg, 0.0);
 		this.optimalSchedule = schedule;
 	}
 
@@ -23,7 +23,7 @@ public class MLPrioGT extends MLPrio {
 	/**
 	 * Result is not normalized yet
 	 */
-	@Override
+	//@Override
 	protected double calculateFlowCriticality(int flowID) {
 		Flow flow = fg.getFlows().get(flowID);
 		double result = 0;

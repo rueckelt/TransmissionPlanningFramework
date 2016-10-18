@@ -11,6 +11,7 @@ public class Decision implements Comparable<Decision> {
 	public int[] network;
 	public int[] starttime;
 	public int[] deadline;
+	public int[] throughput;
 	public int rating;
 	public String algorithm;
 
