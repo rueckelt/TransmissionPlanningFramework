@@ -1,13 +1,18 @@
 package ToolSet;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ScheduleWrapper {
 	private int[][][] schedule;
 	private boolean isFinished;
+	private List<Decision> history;
 
 	public ScheduleWrapper(int f, int t, int n) {
 		this.schedule = new int[f][t][n];
 		initSchedule();
 
+		this.history = new ArrayList<Decision>();
 		this.isFinished = false;
 	}
 
@@ -27,6 +32,22 @@ public class ScheduleWrapper {
 
 	public void setFinished(boolean isFinished) {
 		this.isFinished = isFinished;
+	}
+
+	public boolean isFinished() {
+		return isFinished;
+	}
+
+	public void addDecision(Decision d) {
+		this.history.add(d);
+	}
+
+	public int[][][] getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(int[][][] schedule) {
+		this.schedule = schedule;
 	}
 
 	public ScheduleWrapper clone() {

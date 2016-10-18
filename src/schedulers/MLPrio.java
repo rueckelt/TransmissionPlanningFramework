@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.Set;
 
 import ToolSet.CostSeparation;
+import ToolSet.Decision;
 import ToolSet.ScheduleWrapper;
-import ToolSet.Tree;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
@@ -20,71 +20,56 @@ public class MLPrio extends Scheduler {
 	protected NetworkGenerator ng;
 	protected FlowGenerator fg;
 	protected CostSeparation cs;
+	List<ScheduleWrapper> currentLeafs;
 
 	/*
 	 * if this is 0, all scheduling decisions will be evaluated
 	 * Higher threshholds mean less computation time, but possibly less ideal solutions
 	 */
-	protected double ratingThreshold = 0.9;
-
-	/**
-	 * A protected class to hold scheduling decisions.
-	 * It saves a rating of the decision as well, and is comparable by it to other decisions
-	 * @author jakob
-	 *
-	 */
-	protected class Decision implements Comparable<Decision> {
-		public int flow;
-		public int network;
-		public int starttime;
-		public int deadline;
-		public int rating;
-
-		public Decision(int flow, int network, int starttime, int deadline, int rating) {
-			this.flow = flow;
-			this.network = network;
-			this.starttime = starttime;
-			this.deadline = deadline;
-			this.rating = rating;
-		}
-
-		@Override
-		public int compareTo(Decision anotherDecision) {
-			return this.rating - anotherDecision.rating;
-		}
-	}
+	protected double ratingThreshold = 0.0;
 
 	public MLPrio(NetworkGenerator ng, FlowGenerator fg) {
 		super(ng, fg);
 		this.ng = ng.clone();
 		this.fg = fg;
 		this.cs = new CostSeparation(fg, ng);
+		currentLeafs = new ArrayList<ScheduleWrapper>();
+		currentLeafs.add(new ScheduleWrapper(fg.getFlows().size(), ng.getTimeslots(), ng.getNetworks().size()));
 	}
 
 	@Override
 	protected void calculateInstance_internal(String logfile) {
-		//calculate global criticality for all flows
-		double[] globalFlowCriticality = calculateGlobalFlowCriticality();
-		int[][] timeMatch = cs.getTimeMatch();
-		int[][] networkMatch = cs.getNetworkMatch();
-		Tree<Integer[][][]> branches;
-
+		List<Decision> decisions;
 		do {
 			//discover and sort possible Decisions
-			List<Decision> decisions = discoverDecisions();
+			for (ScheduleWrapper sw : currentLeafs) {
+				if (!sw.isFinished()) {
+					decisions = discoverDecisions(sw);
 
-			//Only consider decisions that are close to the best rating atm
-			int consideredIndex = 0;
-			while (consideredIndex + 1 < decisions.size()
-					&& decisions.get(consideredIndex + 1).rating / decisions.get(0).rating > ratingThreshold) {
-				consideredIndex++;
+					//Only consider decisions that are close to the best rating atm
+					int consideredIndex = 0;
+					while (consideredIndex + 1 < decisions.size()
+							&& decisions.get(consideredIndex + 1).rating / decisions.get(0).rating > ratingThreshold) {
+						consideredIndex++;
+					}
+				}
 			}
+		} while (unfinishedBranches() > 0); //When to stop scheduling?
 
-		} while (true); //When to stop scheduling?
-
+		// TODO extract best leaf schedule
 	}
 
-	public void allocate(Decision d, ScheduleWrapper schedule) {
+	private int unfinishedBranches() {
+		int unfinished = 0;
+		for (ScheduleWrapper sw : currentLeafs) {
+			if (sw.isFinished()) {
+				unfinished++;
+			}
+		}
+		return unfinished;
+	}
+
+	public void executeDecision(Decision d, ScheduleWrapper schedule) {
 		//Aus Scheduler.java benutzen
 	}
 
@@ -92,7 +77,7 @@ public class MLPrio extends Scheduler {
 	 * Calls all decisionProviders and returns a sorted list with their proposed scheduling decisions
 	 * @return
 	 */
-	private List<Decision> discoverDecisions() {
+	private List<Decision> discoverDecisions(ScheduleWrapper sw) {
 		List<Decision> decisions = new ArrayList<Decision>();
 
 		decisions.addAll(greedyDecision());
@@ -106,21 +91,18 @@ public class MLPrio extends Scheduler {
 
 	private Collection<? extends Decision> greedyDecision() {
 		List<Decision> decisions = new ArrayList<Decision>();
-		decisions.add(new Decision(0, 0, 0, 1, 15));
 
 		return decisions;
 	}
 
 	private Collection<? extends Decision> timeDisplacedDecision() {
 		List<Decision> decisions = new ArrayList<Decision>();
-		decisions.add(new Decision(0, 0, 0, 1, 15));
 
 		return decisions;
 	}
 
 	private Collection<? extends Decision> throughputTradeoffDecision() {
 		List<Decision> decisions = new ArrayList<Decision>();
-		decisions.add(new Decision(0, 0, 0, 1, 15));
 
 		return decisions;
 	}
