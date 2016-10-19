@@ -8,7 +8,6 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import schedulers.GreedyScheduler;
 import schedulers.MLPrio;
 import schedulers.Scheduler;
 import schedulingIOModel.FlowGenerator;
@@ -96,7 +95,7 @@ public class EvaluationScenarioCreator {
 		//			schedulers.add(new GreedyOnlineOpppertunisticScheduler(ng, tg).setScheduleDecisionLimit(i));
 		//		}
 		//		schedulers.add(new OptimizationScheduler(ng, tg));
-		schedulers.add(new GreedyScheduler(ng, tg).newRating(true));
+		//schedulers.add(new GreedyScheduler(ng, tg).newRating(true));
 		//		schedulers.add(new GreedyScheduler(ng, tg).newRating(false));
 		//		schedulers.add(new GreedyOnlineOpppertunisticScheduler(ng, tg).newRating(true));
 		//		schedulers.add(new GreedyOnlineScheduler(ng, tg).newRating(true));

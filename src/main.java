@@ -18,7 +18,7 @@ public class main {
 		//		String logpath= "my_logs"+File.separator+"short_test";
 		//		String logpath= "my_logs"+File.separator+"test";
 
-		String logpath = "my_logs" + File.separator + "jakobGG";
+		String logpath = "my_logs" + File.separator + "jakob";
 
 		//		for(int rep1 = 0; rep1<=rep; rep1++){
 

@@ -1,7 +1,6 @@
 package ToolSet;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -101,7 +100,8 @@ public class EvaluationScenarioExecutionWorker implements Callable<Boolean> {
 				try {
 					scheds = EvaluationScenarioCreator.initSchedulers(ng, tg,
 							NetworkInformationExtractor.getOptimalSchedule(path + "Optimization_log.m"));
-				} catch (FileNotFoundException e) {
+				} catch (Exception e) {
+					System.out.println("Optimal schedule file not found, generating new ng + fg");
 					scheds = EvaluationScenarioCreator.initSchedulers(ng, tg, null);
 				}
 				for (Scheduler scheduler : scheds) {
