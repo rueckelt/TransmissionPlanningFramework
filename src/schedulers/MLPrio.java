@@ -130,7 +130,7 @@ public class MLPrio extends Scheduler {
 
 	@Override
 	public String getType() {
-		return "ML-Prio_Scheduler";
+		return "ML_Prio_Scheduler";
 	}
 
 }
