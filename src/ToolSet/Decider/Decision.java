@@ -1,4 +1,4 @@
-package ToolSet;
+package ToolSet.Decider;
 
 /**
 	 * A protected class to hold scheduling decisions.
@@ -7,19 +7,12 @@ package ToolSet;
 	 *
 	 */
 public class Decision implements Comparable<Decision> {
-	public int[] flow;
-	public int[] network;
-	public int[] starttime;
-	public int[] deadline;
-	public int[] throughput;
+	public int[][][] proposedSchedule;
 	public int rating;
 	public String algorithm;
 
-	public Decision(int[] flow, int[] network, int[] starttime, int[] deadline, int rating, String algorithm) {
-		this.flow = flow;
-		this.network = network;
-		this.starttime = starttime;
-		this.deadline = deadline;
+	public Decision(int[][][] proposedSchedule, int rating, String algorithm) {
+		this.proposedSchedule = proposedSchedule;
 		this.rating = rating;
 		this.algorithm = algorithm;
 	}

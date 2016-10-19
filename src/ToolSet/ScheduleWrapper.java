@@ -3,6 +3,8 @@ package ToolSet;
 import java.util.ArrayList;
 import java.util.List;
 
+import ToolSet.Decider.Decision;
+
 public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 	private int[][][] schedule;
 	private boolean isFinished;
@@ -36,6 +38,13 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 	}
 
 	public void addDecision(Decision d) {
+		for (int f = 0; f < schedule.length; f++) {
+			for (int t = 0; t < schedule[0].length; t++) {
+				for (int n = 0; n < schedule[0][0].length; n++) {
+					schedule[f][t][n] = d.proposedSchedule[f][t][n];
+				}
+			}
+		}
 		this.history.add(d);
 	}
 
@@ -66,6 +75,9 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 			}
 		}
 
+		for (int i = 0; i < history.size(); i++) {
+			result.addDecision(history.get(i));
+		}
 		result.setFinished(this.isFinished);
 		return result;
 	}
@@ -73,6 +85,19 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 	@Override
 	public int compareTo(ScheduleWrapper anotherScheduleWrapper) {
 		return this.getTotalCost() - anotherScheduleWrapper.getTotalCost();
+	}
+
+	public boolean isDifferentSchedule(int[][][] anotherSchedule) {
+		for (int f = 0; f < schedule.length; f++) {
+			for (int t = 0; t < schedule[0].length; t++) {
+				for (int n = 0; n < schedule[0][0].length; n++) {
+					if (anotherSchedule[f][t][n] != schedule[f][t][n]) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 }

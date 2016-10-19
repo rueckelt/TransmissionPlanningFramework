@@ -42,8 +42,8 @@ public class GreedyScheduler extends Scheduler {
 	 */
 
 	public GreedyScheduler(NetworkGenerator ng, FlowGenerator tg) {
-
 		super(ng, tg);
+
 		if (ng != null && tg != null) {
 			ng_tmp = ng.clone();
 		}
@@ -116,7 +116,7 @@ public class GreedyScheduler extends Scheduler {
 	 * @param rate boolean if you just need the rating (true) or if it should be scheduled (false)
 	 * rate=true deletes the current schedule. It should be used only on fresh instances/before scheduling. 
 	 */
-	private int scheduleFlow(int flowIndex, boolean rate) {
+	protected int scheduleFlow(int flowIndex, boolean rate) {
 		this.flowIndex = flowIndex;
 		Flow flow = tg.getFlows().get(flowIndex);
 		Set<Integer> usedSlots = new HashSet<Integer>(); //each flow can use only one network in each time slot

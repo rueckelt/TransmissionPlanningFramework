@@ -25,7 +25,7 @@ public class MLPrioGT extends MLPrio {
 	 */
 	//@Override
 	protected double calculateFlowCriticality(int flowID) {
-		Flow flow = fg.getFlows().get(flowID);
+		Flow flow = tg.getFlows().get(flowID);
 		double result = 0;
 
 		//Right side of the formula
