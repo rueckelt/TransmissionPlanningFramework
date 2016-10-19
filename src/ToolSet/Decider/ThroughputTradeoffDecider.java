@@ -8,8 +8,10 @@ import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
 
 public class ThroughputTradeoffDecider implements Decider {
+	protected String name;
 
 	public ThroughputTradeoffDecider(NetworkGenerator ng, FlowGenerator fg) {
+		name = "ThroughputTradeoff";
 	}
 
 	@Override

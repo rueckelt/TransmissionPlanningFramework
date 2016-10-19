@@ -26,32 +26,38 @@ public class GreedyDecider extends GreedyScheduler implements Decider {
 		if (NEW_RATING_ESTIMATOR) {
 			initCostSeparation();
 		}
+		boolean br = false;
+
 		ScheduleWrapper oldSchedule = sw.clone();
 		List<Decision> decisions = new ArrayList<Decision>();
 		this.setTempSchedule(sw.clone().getSchedule());
-		int flowIndex = selectFlow(sw);
-		//System.out.println("flowIndex: " + flowIndex);
-		if (flowIndex != -1) {
+		List<Integer> flows = selectFlows(sw);
 
-			scheduleFlow(flowIndex, false);
+		while (!br && flows.size() > 0) {
+			//System.out.println("flowIndex: " + flowIndex);
+			scheduleFlow(flows.get(0), false);
 			if (oldSchedule.isDifferentSchedule(getTempSchedule())) {
 				decisions.add(new Decision(getTempSchedule(), 1, name));
+				return decisions;
+			} else {
+				flows.remove(0);
 			}
 		}
 		return decisions;
 	}
 
-	protected int selectFlow(ScheduleWrapper sw) {
+	protected List<Integer> selectFlows(ScheduleWrapper sw) {
 		List<Integer> criticality = sortByFlowCriticality();
 		List<Integer> sched = findAlreadyScheduledFlows(sw);
+		List<Integer> flows = new ArrayList<Integer>();
 		//System.out.println("crit: " + criticality);
 		//System.out.println("sched: " + sched);
 		for (int i = 0; i < criticality.size(); i++) {
 			if (!sched.contains(criticality.get(i))) {
-				return criticality.get(i);
+				flows.add(criticality.get(i));
 			}
 		}
-		return -1;
+		return flows;
 	}
 
 	protected List<Integer> findAlreadyScheduledFlows(ScheduleWrapper sw) {

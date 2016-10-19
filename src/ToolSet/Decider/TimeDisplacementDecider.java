@@ -8,8 +8,10 @@ import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
 
 public class TimeDisplacementDecider implements Decider {
+	protected String name;
 
 	public TimeDisplacementDecider(NetworkGenerator ng, FlowGenerator fg) {
+		name = "TimeDisplacement";
 	}
 
 	@Override

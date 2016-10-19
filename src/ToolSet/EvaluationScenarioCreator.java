@@ -8,10 +8,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import schedulers.GreedyScheduler;
 import schedulers.MLPrio;
-import schedulers.OptimizationScheduler;
-import schedulers.RandomScheduler;
 import schedulers.Scheduler;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
@@ -97,9 +94,9 @@ public class EvaluationScenarioCreator {
 		//		for(int i=-12000; i>-20000;i=i-2000){
 		//			schedulers.add(new GreedyOnlineOpppertunisticScheduler(ng, tg).setScheduleDecisionLimit(i));
 		//		}
-		schedulers.add(new OptimizationScheduler(ng, tg));
-		schedulers.add(new GreedyScheduler(ng, tg).newRating(true));
-		schedulers.add(new GreedyScheduler(ng, tg).newRating(false));
+		//schedulers.add(new OptimizationScheduler(ng, tg));
+		//schedulers.add(new GreedyScheduler(ng, tg).newRating(true));
+		//schedulers.add(new GreedyScheduler(ng, tg).newRating(false));
 		//		schedulers.add(new GreedyOnlineOpppertunisticScheduler(ng, tg).newRating(true));
 		//		schedulers.add(new GreedyOnlineScheduler(ng, tg).newRating(true));
 		//schedulers.add(new GreedySchedulerFNGT(ng, tg, schedule));
@@ -107,7 +104,7 @@ public class EvaluationScenarioCreator {
 		//schedulers.add(new GreedySchedulerFNRandom(ng, tg));
 		//schedulers.add(new GreedySchedulerCriticalityGT(ng, tg, schedule));
 		schedulers.add(new MLPrio(ng, tg, 0.0));
-		schedulers.add(new RandomScheduler(ng, tg, 200)); //200 random runs of this scheduler. Returns average duration and cost
+		//schedulers.add(new RandomScheduler(ng, tg, 200)); //200 random runs of this scheduler. Returns average duration and cost
 
 		return schedulers;
 	}
