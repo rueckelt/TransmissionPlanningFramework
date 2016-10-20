@@ -18,7 +18,7 @@ public abstract class Scheduler {
 	 * TODO: Different strategies
 	 * 
 	 */
-
+	protected boolean debugOutput = false;
 	protected NetworkGenerator ng;
 	protected FlowGenerator tg;
 	protected LogMatlabFormat logger;
@@ -66,7 +66,7 @@ public abstract class Scheduler {
 		return logpath + getType() + "_log.m";
 	}
 
-	protected int[][][] getEmptySchedule() {
+	public int[][][] getEmptySchedule() {
 		if (tg == null || ng == null)
 			return null;
 		return new int[tg.getFlows().size()][ng.getNetworks().get(0).getSlots()][ng.getNetworks().size()];
@@ -145,7 +145,7 @@ public abstract class Scheduler {
 	 * @return true if constraints hold
 	 */
 
-	private boolean verificationOfConstraints(int[][][] schedule_f_t_n) {
+	protected boolean verificationOfConstraints(int[][][] schedule_f_t_n) {
 
 		Vector<Network> networks = ng.getNetworks();
 		Vector<Flow> flows = tg.getFlows();
@@ -169,17 +169,21 @@ public abstract class Scheduler {
 				}
 				//check overuse of resources (1)
 				if (network_use > networks.get(n).getCapacity().get(t)) {
-					System.err.println("Scheduler::constraintCheck - Net use error: " + network_use + " > "
-							+ networks.get(n).getCapacity().get(t) + ", network " + n + " time " + t);
+					if (debugOutput) {
+						System.err.println("Scheduler::constraintCheck - Net use error: " + network_use + " > "
+								+ networks.get(n).getCapacity().get(t) + ", network " + n + " time " + t);
+					}
 					return false; //violation if used capacity of network in this time slot is larger than available capacity in this time slot
 				}
 			}
 			//check: Do not exceed available number of Link Interfaces (2)
 			for (int i = 0; i < network_used_by_type.length; i++) {
 				if (network_used_by_type[i] > ng.getNofInterfacesByType()[i]) { //check if sum is larger than available interfaces
-					System.err.println("Scheduler::constraintCheck - Parallel link interface error : "
-							+ network_used_by_type[i] + " > " + ng.getNofInterfacesByType()[i]);
-					System.out.println(Arrays.toString(ng.getNofInterfacesByType()));
+					if (debugOutput) {
+						System.err.println("Scheduler::constraintCheck - Parallel link interface error : "
+								+ network_used_by_type[i] + " > " + ng.getNofInterfacesByType()[i]);
+						System.out.println(Arrays.toString(ng.getNofInterfacesByType()));
+					}
 					return false;
 				}
 			}
@@ -192,8 +196,10 @@ public abstract class Scheduler {
 						if (flow_is_scheduled == false) {
 							flow_is_scheduled = true; //set true if flow is scheduled in this time slot
 						} else {
-							System.err.println("Scheduler::constraintCheck - Parallel channel use for same flow: " + f
-									+ " in time slot " + t);
+							if (debugOutput) {
+								System.err.println("Scheduler::constraintCheck - Parallel channel use for same flow: "
+										+ f + " in time slot " + t);
+							}
 							return false; //violation if flow scheduled to a second network
 						}
 					}
@@ -213,8 +219,10 @@ public abstract class Scheduler {
 					}
 				}
 				if (chunkSum > chunksMax) {
-					System.err.println("Scheduler::constraintCheck - Upper throughput limit exceeded for flow: " + f
-							+ " in time window " + t + " to " + t + winSize + " by " + (chunkSum - chunksMax));
+					if (debugOutput) {
+						System.err.println("Scheduler::constraintCheck - Upper throughput limit exceeded for flow: " + f
+								+ " in time window " + t + " to " + t + winSize + " by " + (chunkSum - chunksMax));
+					}
 					return false; //violation of upper tp limit
 				}
 			}
@@ -260,11 +268,20 @@ public abstract class Scheduler {
 			return 0;
 		if (!interfaceLimit.isUsable(network, time))
 			return 0;
+
 		//		System.out.println("interface_limit_ok");
 		//		System.out.println("Scheduler::allocate. validity checks passed");
 		//calculate remaining capacity of network in this slot
 		int remaining_net_cap = getRemainingNetCap(network, time);
-		int s[][][] = schedule_f_t_n_temp;
+		int s[][][] = getEmptySchedule();
+		for (int n = 0; n < ng.getNetworks().size(); n++) {
+			for (int f = 0; f < tg.getFlows().size(); f++) {
+				for (int t = 0; t < ng.getTimeslots(); t++) {
+					s[f][t][n] = schedule_f_t_n_temp[f][t][n];
+				}
+			}
+		}
+
 		int scheduled = Math.min(tokens, remaining_net_cap);
 		//		System.out.println("Scheduler::allocate. f,t,n "+flow+","+time+","+network+" tokens: "+tokens+
 		//				"; remaining cap = "+remaining_net_cap+"; scheduled = "+scheduled);
@@ -275,6 +292,12 @@ public abstract class Scheduler {
 		//		}else{
 		//			s[flow][time][network]+=tokens;
 		//		}
+
+		//		int x = s[0][0][0];
+		//		s[0][0][0] = 2500;
+		//		System.out.println(schedule_f_t_n_temp[0][0][0]);
+		//		s[0][0][0] = x;
+
 		if (scheduled > 0) {
 			s[flow][time][network] += scheduled;
 			//any constraint violated? use if ok, else revert
@@ -283,7 +306,9 @@ public abstract class Scheduler {
 				interfaceLimit.useNetwork(network, time);
 				return scheduled;
 			} else {
-				System.err.println("Scheduler::allocate. constraint check NOT passed");
+				if (debugOutput) {
+					System.err.println("Scheduler::allocate. constraint check NOT passed");
+				}
 				return 0;
 			}
 		}

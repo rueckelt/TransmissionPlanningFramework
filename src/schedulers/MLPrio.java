@@ -22,13 +22,14 @@ public class MLPrio extends Scheduler {
 
 	/*
 	 * if this is 0, all scheduling decisions will be evaluated
-	 * Higher threshholds mean less computation time, but possibly less ideal solutions
+	 * Higher thresholds mean less computation time, but possibly less ideal solutions
 	 */
 	protected double ratingThreshold;
 
 	public MLPrio(NetworkGenerator ng, FlowGenerator fg, double ratingThreshold) {
 		super(ng, fg);
 		this.ratingThreshold = ratingThreshold;
+
 	}
 
 	@Override
@@ -44,10 +45,6 @@ public class MLPrio extends Scheduler {
 			decisions = discoverDecisions(sw);
 			//Only consider decisions that are close to the best rating atm
 			//System.out.println("decisions made this round: " + decisions.size());
-			if (evaluations > 100) {
-				finishedLeafs.add(sw);
-				break;
-			}
 			if (decisions.size() == 0) {
 				//No Decider wanted to add to the current schedule, so it is regarded as finished
 				sw.setFinished(true);
@@ -79,6 +76,12 @@ public class MLPrio extends Scheduler {
 
 		}
 		this.setTempSchedule(finishedLeafs.get(minIndex).getSchedule());
+
+		if (!verificationOfConstraints(getTempSchedule())) {
+			System.err.println("stuff is weird!");
+		}
+
+		System.out.println("Total number of evaluations for this schedule: " + evaluations);
 	}
 
 	private void initVariables() {
@@ -88,7 +91,8 @@ public class MLPrio extends Scheduler {
 		deciders = new ArrayList<Decider>();
 
 		//Add deciders here
-		deciders.add(new GreedyDecider(ng, tg));
+		deciders.add(new GreedyDecider(ng, tg, true));
+		deciders.add(new GreedyDecider(ng, tg, false));
 		//deciders.add(new ThroughputTradeoffDecider(ng, tg));
 		//deciders.add(new TimeDisplacementDecider(ng, tg));
 

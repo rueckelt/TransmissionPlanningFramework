@@ -53,7 +53,7 @@ public class GreedyScheduler extends Scheduler {
 	protected int schedule_decision_limit = 0;
 	protected int tl_offset = 0; //allowed time offset for which violation is allowed
 
-	protected boolean NEW_RATING_ESTIMATOR = true;
+	protected boolean NEW_RATING_ESTIMATOR = false;
 	protected CostSeparation cs;
 
 	/**
@@ -63,7 +63,11 @@ public class GreedyScheduler extends Scheduler {
 	 */
 	public Scheduler newRating(boolean NEW_RATING) {
 		NEW_RATING_ESTIMATOR = NEW_RATING;
-		tl_offset = 4; //allow the new metric to violoate time limit constraints
+		if (NEW_RATING) {
+			tl_offset = 4; //allow the new metric to violate time limit constraints
+		} else {
+			tl_offset = 0;
+		}
 		return this;
 	}
 

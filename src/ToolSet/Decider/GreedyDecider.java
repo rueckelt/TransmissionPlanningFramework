@@ -16,9 +16,10 @@ import schedulingIOModel.NetworkGenerator;
 public class GreedyDecider extends GreedyScheduler implements Decider {
 	protected String name;
 
-	public GreedyDecider(NetworkGenerator ng, FlowGenerator fg) {
+	public GreedyDecider(NetworkGenerator ng, FlowGenerator fg, boolean NEW_RATING) {
 		super(ng, fg);
 		name = "GreedyDecider";
+		newRating(NEW_RATING);
 	}
 
 	@Override
@@ -31,7 +32,8 @@ public class GreedyDecider extends GreedyScheduler implements Decider {
 		ScheduleWrapper oldSchedule = sw.clone();
 		List<Decision> decisions = new ArrayList<Decision>();
 		this.setTempSchedule(sw.clone().getSchedule());
-		List<Integer> flows = selectFlows(sw);
+		List<Integer> flows = sortByFlowCriticality();
+		//List<Integer> flows = selectFlows(sw);
 
 		while (!br && flows.size() > 0) {
 			//System.out.println("flowIndex: " + flowIndex);

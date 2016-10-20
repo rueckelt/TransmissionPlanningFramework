@@ -13,7 +13,7 @@ every x tick label/.append style={font=\color{black}},
 xmin=0.5,
 xmax=5.5,
 xtick={0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5},
-xticklabels={{},{Optimization},{},{Greedy\_0\_H2},{},{Greedy\_0\_H2\_FNGT},{},{Greedy\_0\_H2\_FNRandom},{},{Random},{},{},{}},
+xticklabels={{},{Optimization},{},{Greedy\_0\_H2},{},{ML\_Prio\_Scheduler},{},{Greedy\_0},{},{Random},{},{},{}},
 xlabel={schedulers},
 every outer y axis line/.append style={white!85!black},
 every y tick label/.append style={font=\color{white!85!black}},
@@ -30,8 +30,8 @@ legend style={at={(0.03,0.97)},anchor=north west,legend cell align=left,align=le
  table[row sep=crcr, y error plus index=2, y error minus index=3]{%
 1	1517094.807	688321.078977876	688321.078977876\\
 2	1631091.574	744010.935232294	744010.935232294\\
-3	1763810.433	757804.688044044	757804.688044044\\
-4	1772496.521	755259.432532575	755259.432532575\\
+3	1588233.264	752015.189259539	752015.189259539\\
+4	1693232.801	738428.644386549	738428.644386549\\
 5	2768198.76	1063150.66828983	1063150.66828983\\
 };
 \addlegendentry{cost function value};
@@ -49,7 +49,7 @@ every x tick label/.append style={font=\color{black}},
 xmin=0.5,
 xmax=5.5,
 xtick={0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5},
-xticklabels={{},{Optimization},{},{Greedy\_0\_H2},{},{Greedy\_0\_H2\_FNGT},{},{Greedy\_0\_H2\_FNRandom},{},{Random},{},{},{}},
+xticklabels={{},{Optimization},{},{Greedy\_0\_H2},{},{ML\_Prio\_Scheduler},{},{Greedy\_0},{},{Random},{},{},{}},
 xlabel={schedulers},
 every outer y axis line/.append style={black},
 every y tick label/.append style={font=\color{black}},
@@ -64,8 +64,8 @@ ylabel={cost function value}
  table[row sep=crcr, y error plus index=2, y error minus index=3]{%
 1	1517094.807	688321.078977876	688321.078977876\\
 2	1631091.574	744010.935232294	744010.935232294\\
-3	1763810.433	757804.688044044	757804.688044044\\
-4	1772496.521	755259.432532575	755259.432532575\\
+3	1588233.264	752015.189259539	752015.189259539\\
+4	1693232.801	738428.644386549	738428.644386549\\
 5	2768198.76	1063150.66828983	1063150.66828983\\
 };
 \end{axis}
