@@ -10,7 +10,6 @@ import ToolSet.Decider.Decider;
 import ToolSet.Decider.Decision;
 import ToolSet.Decider.GreedyDecider;
 import ToolSet.Decider.ThroughputTradeoffDecider;
-import ToolSet.Decider.TimeDisplacementDecider;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
@@ -79,7 +78,9 @@ public class MLPrio extends Scheduler {
 				}
 			}
 			evaluations++;
-			//System.out.println("evals: " + evaluations);
+			if (evaluations % 500 == 0) {
+				System.out.println("evals: " + evaluations + ", currentLeafs size: " + currentLeafs.size());
+			}
 		}
 
 		int minIndex = 0;
@@ -112,12 +113,12 @@ public class MLPrio extends Scheduler {
 		switch (config) {
 		case 1:
 			deciders.add(new GreedyDecider(ng, tg, true));
-			deciders.add(new GreedyDecider(ng, tg, true));
+			deciders.add(new GreedyDecider(ng, tg, false));
 			break;
 		case 2:
 			deciders.add(new GreedyDecider(ng, tg, true));
 			deciders.add(new ThroughputTradeoffDecider(ng, tg));
-			deciders.add(new TimeDisplacementDecider(ng, tg));
+			//deciders.add(new TimeDisplacementDecider(ng, tg));
 			break;
 		default:
 			deciders.add(new GreedyDecider(ng, tg, true));

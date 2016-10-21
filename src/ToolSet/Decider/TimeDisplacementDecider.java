@@ -66,7 +66,7 @@ public class TimeDisplacementDecider extends GreedyScheduler implements Decider 
 		return decisions;
 	}
 
-	private int[][] calculateFlowTimeOverlap() {
+	protected int[][] calculateFlowTimeOverlap() {
 		int[][] result = new int[fg.getFlows().size()][fg.getFlows().size()];
 
 		for (int i = 0; i < fg.getFlows().size(); i++) {

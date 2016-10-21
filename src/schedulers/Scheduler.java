@@ -355,6 +355,9 @@ public abstract class Scheduler {
 		if (remaining_net_cap <= 0)
 			return 0;
 		//System.out.println("-------------remaining cap bounds are valid;; net / time "+network+" / "+time+"  cap ="+remaining_net_cap);
+		if (schedule_f_t_n_temp == null) {
+			System.err.println("blbb");
+		}
 		for (int f = 0; f < tg.getFlows().size(); f++) {
 			remaining_net_cap -= schedule_f_t_n_temp[f][time][network];
 		}
