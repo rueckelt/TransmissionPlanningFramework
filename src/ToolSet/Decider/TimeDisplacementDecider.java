@@ -5,19 +5,21 @@ import java.util.List;
 
 import ToolSet.CostSeparation;
 import ToolSet.ScheduleWrapper;
+import schedulers.GreedyScheduler;
 import schedulers.PriorityScheduler;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.Flow;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
 
-public class TimeDisplacementDecider implements Decider {
+public class TimeDisplacementDecider extends GreedyScheduler implements Decider {
 	protected String name;
 	CostSeparation cs;
 	FlowGenerator fg;
 	NetworkGenerator ng;
 
 	public TimeDisplacementDecider(NetworkGenerator ng, FlowGenerator fg) {
+		super(ng, fg);
 		name = "TimeDisplacement";
 		this.cs = new CostSeparation(fg, ng);
 		this.fg = fg;
@@ -44,6 +46,21 @@ public class TimeDisplacementDecider implements Decider {
 					biggestOverlapValue = flowTimeOverlap[i][j];
 				}
 			}
+		}
+
+		ScheduleWrapper oldSchedule = sw.clone();
+		this.setTempSchedule(sw.clone().getSchedule());
+		int flow;
+		if (flowCriticality.get(biggestOverlapA) > flowCriticality.get(biggestOverlapB)) {
+			flow = biggestOverlapB;
+		} else {
+			flow = biggestOverlapA;
+		}
+
+		scheduleFlow(flow, false);
+		if (oldSchedule.isDifferentSchedule(getTempSchedule())) {
+			decisions.add(new Decision(getTempSchedule(), 1, name));
+			return decisions;
 		}
 
 		return decisions;
@@ -100,5 +117,15 @@ public class TimeDisplacementDecider implements Decider {
 
 	protected int[][][] getEmptySchedule(FlowGenerator tg, NetworkGenerator ng) {
 		return new PriorityScheduler(ng, tg).getEmptySchedule(); //this could be a dummy scheduler.. only need empty schedule from it
+	}
+
+	@Override
+	protected void calculateInstance_internal(String logfile) {
+		throw new UnsupportedOperationException("This is not a full scheduler");
+	}
+
+	@Override
+	public String getType() {
+		throw new UnsupportedOperationException("This is not a full scheduler");
 	}
 }

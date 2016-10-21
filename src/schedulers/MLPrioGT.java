@@ -11,7 +11,7 @@ public class MLPrioGT extends MLPrio {
 	protected int[][][] optimalSchedule;
 
 	public MLPrioGT(NetworkGenerator ng, FlowGenerator tg, int[][][] schedule) {
-		super(ng, tg, 0.0);
+		super(ng, tg, 1, 0.0);
 		this.optimalSchedule = schedule;
 	}
 

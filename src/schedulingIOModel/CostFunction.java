@@ -250,8 +250,14 @@ public class CostFunction {
 			Flow flow = tg.getFlows().get(f);
 			vioNon[f] = (flow.getTokens() - cummulated_f_t[f][timeslots - 1]) * flow.getImpUnsched()
 					* flow.getImpUser();
-
+			//			System.out.println(f);
+			//			System.out.println(flow.getTokens());
+			//			System.out.println(cummulated_f_t[f][timeslots - 1]);
+			//			System.out.println(vioNon[f]);
+			//			System.out.println("--------");
 		}
+		//		System.out.println("%%%%%%%%%%");
+
 		//		System.out.println("vioNon: "+Arrays.toString(vioNon));
 		check(vioNon, "non_allo_vio");
 		if (logger != null) {

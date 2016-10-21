@@ -9,6 +9,8 @@ import ToolSet.ScheduleWrapper;
 import ToolSet.Decider.Decider;
 import ToolSet.Decider.Decision;
 import ToolSet.Decider.GreedyDecider;
+import ToolSet.Decider.ThroughputTradeoffDecider;
+import ToolSet.Decider.TimeDisplacementDecider;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
@@ -20,17 +22,17 @@ public class MLPrio extends Scheduler {
 	protected List<ScheduleWrapper> currentLeafs;
 	protected List<ScheduleWrapper> finishedLeafs;
 	private static int totalEvaluations = 0;
-
+	protected int config;
 	/*
 	 * if this is 0, all scheduling decisions will be evaluated
 	 * Higher thresholds mean less computation time, but possibly less ideal solutions
 	 */
 	protected double ratingThreshold;
 
-	public MLPrio(NetworkGenerator ng, FlowGenerator fg, double ratingThreshold) {
+	public MLPrio(NetworkGenerator ng, FlowGenerator fg, int config, double ratingThreshold) {
 		super(ng, fg);
 		this.ratingThreshold = ratingThreshold;
-
+		this.config = config;
 	}
 
 	@Override
@@ -91,7 +93,7 @@ public class MLPrio extends Scheduler {
 		}
 		this.setTempSchedule(finishedLeafs.get(minIndex).getSchedule());
 
-		if (!verificationOfConstraints(getTempSchedule())) {
+		if (!verificationOfConstraints(finishedLeafs.get(minIndex).getSchedule())) {
 			System.err.println("stuff is weird!");
 		}
 
@@ -107,12 +109,20 @@ public class MLPrio extends Scheduler {
 		deciders = new ArrayList<Decider>();
 
 		//Add deciders here
-		deciders.add(new GreedyDecider(ng, tg, true));
-		deciders.add(new GreedyDecider(ng, tg, true));
-		deciders.add(new GreedyDecider(ng, tg, true));
-		deciders.add(new GreedyDecider(ng, tg, true));
-		//deciders.add(new ThroughputTradeoffDecider(ng, tg));
-		//deciders.add(new TimeDisplacementDecider(ng, tg));
+		switch (config) {
+		case 1:
+			deciders.add(new GreedyDecider(ng, tg, true));
+			deciders.add(new GreedyDecider(ng, tg, true));
+			break;
+		case 2:
+			deciders.add(new GreedyDecider(ng, tg, true));
+			deciders.add(new ThroughputTradeoffDecider(ng, tg));
+			deciders.add(new TimeDisplacementDecider(ng, tg));
+			break;
+		default:
+			deciders.add(new GreedyDecider(ng, tg, true));
+			break;
+		}
 
 		currentLeafs = new ArrayList<ScheduleWrapper>();
 		currentLeafs.add(new ScheduleWrapper(tg.getFlows().size(), ng.getTimeslots(), ng.getNetworks().size()));
@@ -152,7 +162,7 @@ public class MLPrio extends Scheduler {
 
 	@Override
 	public String getType() {
-		return "ML_Prio_Scheduler";
+		return "ML_Prio_Scheduler_type_" + config;
 	}
 
 }

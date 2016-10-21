@@ -145,7 +145,7 @@ public abstract class Scheduler {
 	 * @return true if constraints hold
 	 */
 
-	protected boolean verificationOfConstraints(int[][][] schedule_f_t_n) {
+	protected boolean verificationOfConstraints(int[][][] schedule_f_t_n1) {
 
 		Vector<Network> networks = ng.getNetworks();
 		Vector<Flow> flows = tg.getFlows();
@@ -160,7 +160,7 @@ public abstract class Scheduler {
 				int network_use = 0; //overuse of resources (1)
 
 				for (int f = 0; f < flows.size(); f++) {
-					network_use += schedule_f_t_n[f][t][n]; //overuse of resources (1)
+					network_use += schedule_f_t_n1[f][t][n]; //overuse of resources (1)
 
 					if (!network_used[n]) { //do not count parallel use of the same network (2)
 						network_used_by_type[networks.get(n).getType() - 1]++; //Do not exceed available number of used Link Interfaces (2)
@@ -192,7 +192,7 @@ public abstract class Scheduler {
 			for (int f = 0; f < flows.size(); f++) {
 				boolean flow_is_scheduled = false;
 				for (int n = 0; n < networks.size(); n++) {
-					if (schedule_f_t_n[f][t][n] > 0) {
+					if (schedule_f_t_n1[f][t][n] > 0) {
 						if (flow_is_scheduled == false) {
 							flow_is_scheduled = true; //set true if flow is scheduled in this time slot
 						} else {
@@ -215,7 +215,7 @@ public abstract class Scheduler {
 				int chunkSum = 0; //sum of chunks in this window
 				for (int tw = t; tw < t + winSize; tw++) {
 					for (int n = 0; n < ng.getNetworks().size(); n++) {
-						chunkSum += schedule_f_t_n[f][tw][n];
+						chunkSum += schedule_f_t_n1[f][tw][n];
 					}
 				}
 				if (chunkSum > chunksMax) {
@@ -226,6 +226,23 @@ public abstract class Scheduler {
 					return false; //violation of upper tp limit
 				}
 			}
+
+			int totalSum = 0;
+			for (int t = 0; t < (ng.getTimeslots() - winSize); t++) {
+				for (int n = 0; n < ng.getNetworks().size(); n++) {
+					totalSum += schedule_f_t_n1[f][t][n];
+				}
+				if (totalSum > flow.getTokens()) {
+					if (debugOutput) {
+						System.err
+								.println("Scheduler::constraintCheck - More Tokens scheduled than getTokens() allows: "
+										+ f + " in time window " + t + " to " + t + winSize + " by "
+										+ (totalSum - chunksMax));
+					}
+					return false; //violation of upper token limit
+				}
+			}
+
 		}
 
 		return true;
