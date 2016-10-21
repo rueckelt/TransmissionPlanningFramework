@@ -109,6 +109,8 @@ public class MLPrio extends Scheduler {
 		//Add deciders here
 		deciders.add(new GreedyDecider(ng, tg, true));
 		deciders.add(new GreedyDecider(ng, tg, true));
+		deciders.add(new GreedyDecider(ng, tg, true));
+		deciders.add(new GreedyDecider(ng, tg, true));
 		//deciders.add(new ThroughputTradeoffDecider(ng, tg));
 		//deciders.add(new TimeDisplacementDecider(ng, tg));
 
