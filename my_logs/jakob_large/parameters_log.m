@@ -1,13 +1,13 @@
 
-% 2016-10-20 12:31:25
+% 2016-10-21 16:19:42
 
-% my_logs/jakob_large/
+% my_logs\jakob_large\
 max_time = 2;
 max_flows = 4;
 max_nets = 4;
 max_rep = 1000;
 evaluate_max_only = 1;
 
-scheduler_logs= {'Greedy_0_H2_log.m','Greedy_0_log.m','ML_Prio_Scheduler_log.m'};
-schedulers= {'Greedy_0_H2','Greedy_0','ML_Prio_Scheduler'};
+scheduler_logs= {'ML_Prio_Scheduler_type_0_log.m','ML_Prio_Scheduler_type_2_log.m'};
+schedulers= {'ML_Prio_Scheduler_type_0','ML_Prio_Scheduler_type_2'};
 

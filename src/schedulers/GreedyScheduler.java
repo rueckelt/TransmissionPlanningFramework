@@ -49,7 +49,7 @@ public class GreedyScheduler extends Scheduler {
 		}
 	}
 
-	private NetworkGenerator ng_tmp; //remove scheduled chunks from this ng
+	protected NetworkGenerator ng_tmp; //remove scheduled chunks from this ng
 	protected int schedule_decision_limit = 0;
 	protected int tl_offset = 0; //allowed time offset for which violation is allowed
 
@@ -355,7 +355,7 @@ public class GreedyScheduler extends Scheduler {
 		return (int) Math.ceil(flow.getTokensMin() / flow.getWindowMin()) + 1;
 	}
 
-	private int getStartTime(Flow flow) {
+	protected int getStartTime(Flow flow) {
 		if (RELAX_TIME_LIMITS) {
 			int startTime = flow.getStartTime() - 15 / (flow.getImpStartTime() + 1);
 			if (startTime < 0) {
@@ -367,7 +367,7 @@ public class GreedyScheduler extends Scheduler {
 		}
 	}
 
-	private int getDeadline(Flow flow) {
+	protected int getDeadline(Flow flow) {
 		if (RELAX_TIME_LIMITS) {
 			int deadline = flow.getDeadline() + 15 / (flow.getImpDeadline() + 1);
 			if (deadline >= ng.getTimeslots()) {

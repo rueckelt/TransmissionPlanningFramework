@@ -11,6 +11,8 @@ public class main {
 		//		int t=1;
 		//		int n=2;
 		//		int rep=3;
+		boolean large = false;
+
 		int f = 2;
 		int t = 2;
 		int n = 2;//5;
@@ -19,7 +21,16 @@ public class main {
 		//		String logpath= "my_logs"+File.separator+"test";
 
 		String logpath = "my_logs" + File.separator + "jakob";
+		if (large) {
+			f = 4;
+			t = 2;
+			n = 4;//5;
+			rep = 1000;
+			//		String logpath= "my_logs"+File.separator+"short_test";
+			//		String logpath= "my_logs"+File.separator+"test";
 
+			logpath = "my_logs" + File.separator + "jakob_large";
+		}
 		//		for(int rep1 = 0; rep1<=rep; rep1++){
 
 		//if overwrite, then delete everything in folder, create scenario new and calculate

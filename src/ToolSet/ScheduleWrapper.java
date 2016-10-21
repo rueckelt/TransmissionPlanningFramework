@@ -1,7 +1,6 @@
 package ToolSet;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import ToolSet.Decider.Decision;
@@ -89,7 +88,8 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 	}
 
 	public boolean isDifferentSchedule(int[][][] anotherSchedule) {
-		return !Arrays.deepEquals(schedule, anotherSchedule);
+		//return !Arrays.deepEquals(schedule, anotherSchedule);
+		return !isSimilar(anotherSchedule);
 	}
 
 	public boolean isSimilar(int[][][] anotherSchedule) {
@@ -97,13 +97,24 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 		for (int f = 0; f < schedule.length; f++) {
 			for (int t = 0; t < schedule[0].length; t++) {
 				for (int n = 0; n < schedule[0][0].length; n++) {
-					if (Math.abs(schedule[f][t][n] - anotherSchedule[f][t][n]) > 1) {
+					if (schedule[f][t][n] != anotherSchedule[f][t][n]) {
 						return false;
 					}
 				}
 			}
 		}
 		return true;
+
+		//		for (int f = 0; f < schedule.length; f++) {
+		//			for (int t = 0; t < schedule[0].length; t++) {
+		//				for (int n = 0; n < schedule[0][0].length; n++) {
+		//					if (Math.abs(schedule[f][t][n] - anotherSchedule[f][t][n]) > 1) {
+		//						return false;
+		//					}
+		//				}
+		//			}
+		//		}
+		//		return true;
 	}
 
 }

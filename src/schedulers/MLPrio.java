@@ -9,7 +9,7 @@ import ToolSet.ScheduleWrapper;
 import ToolSet.Decider.Decider;
 import ToolSet.Decider.Decision;
 import ToolSet.Decider.GreedyDecider;
-import ToolSet.Decider.ThroughputTradeoffDecider;
+import ToolSet.Decider.GreedyDecider2;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
@@ -78,14 +78,15 @@ public class MLPrio extends Scheduler {
 				}
 			}
 			evaluations++;
-			if (evaluations % 500 == 0) {
-				System.out.println("evals: " + evaluations + ", currentLeafs size: " + currentLeafs.size());
+			if (evaluations % 100 == 0) {
+				//System.out.println("evals: " + evaluations + ", currentLeafs size: " + currentLeafs.size());
 			}
 		}
 
 		int minIndex = 0;
 		int minCost = Integer.MAX_VALUE;
 		for (int i = 0; i < finishedLeafs.size(); i++) {
+			finishedLeafs.get(i).setTotalCost(cf.costTotal(finishedLeafs.get(i).getSchedule()));
 			if (finishedLeafs.get(i).getTotalCost() < minCost) {
 				minIndex = i;
 				minCost = finishedLeafs.get(i).getTotalCost();
@@ -93,7 +94,7 @@ public class MLPrio extends Scheduler {
 
 		}
 		this.setTempSchedule(finishedLeafs.get(minIndex).getSchedule());
-
+		//System.out.println("totalcost: " + finishedLeafs.get(minIndex).getTotalCost());
 		if (!verificationOfConstraints(finishedLeafs.get(minIndex).getSchedule())) {
 			System.err.println("stuff is weird!");
 		}
@@ -117,7 +118,7 @@ public class MLPrio extends Scheduler {
 			break;
 		case 2:
 			deciders.add(new GreedyDecider(ng, tg, true));
-			deciders.add(new ThroughputTradeoffDecider(ng, tg));
+			deciders.add(new GreedyDecider2(ng, tg, true));
 			//deciders.add(new TimeDisplacementDecider(ng, tg));
 			break;
 		default:
