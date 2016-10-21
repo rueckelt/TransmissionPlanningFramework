@@ -37,7 +37,13 @@ public class main {
 		//			eval.calculateInstance_t_n_i(t, n, f, rep, logpath+File.separator, false ,true, decomp);	//recalc
 		//			eval.calculateInstance_t_n_i(t, n, f, rep, logpath+File.separator, true ,false, decomp);	//overwrite
 		eval.parallel(4);
+
+		long start = System.currentTimeMillis();
+
 		eval.start();
+		long finish = System.currentTimeMillis();
+
+		System.out.println("done in: " + (finish - start) + " ms");
 		//		}
 
 		//testing uncertainty models

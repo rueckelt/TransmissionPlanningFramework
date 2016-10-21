@@ -19,6 +19,7 @@ public class MLPrio extends Scheduler {
 	protected List<Decider> deciders;
 	protected List<ScheduleWrapper> currentLeafs;
 	protected List<ScheduleWrapper> finishedLeafs;
+	private static int totalEvaluations = 0;
 
 	/*
 	 * if this is 0, all scheduling decisions will be evaluated
@@ -59,7 +60,20 @@ public class MLPrio extends Scheduler {
 				for (int i = 0; i < consideredIndex; i++) {
 					ScheduleWrapper newSchedule = sw.clone();
 					newSchedule.addDecision(decisions.get(i));
-					currentLeafs.add(newSchedule);
+					boolean similarExists = false;
+					for (int j = 0; j < currentLeafs.size(); j++) {
+						if (currentLeafs.get(j).isSimilar(sw.getSchedule())) {
+							similarExists = true;
+						}
+					}
+					for (int j = 0; j < finishedLeafs.size(); j++) {
+						if (finishedLeafs.get(j).isSimilar(sw.getSchedule())) {
+							similarExists = true;
+						}
+					}
+					if (!similarExists) {
+						currentLeafs.add(newSchedule);
+					}
 				}
 			}
 			evaluations++;
@@ -81,7 +95,9 @@ public class MLPrio extends Scheduler {
 			System.err.println("stuff is weird!");
 		}
 
-		System.out.println("Total number of evaluations for this schedule: " + evaluations);
+		//System.out.println("Total number of evaluations for this schedule: " + evaluations);
+		totalEvaluations += evaluations;
+		System.out.println("Total number of evaluations: " + totalEvaluations);
 	}
 
 	private void initVariables() {
@@ -92,7 +108,7 @@ public class MLPrio extends Scheduler {
 
 		//Add deciders here
 		deciders.add(new GreedyDecider(ng, tg, true));
-		deciders.add(new GreedyDecider(ng, tg, false));
+		deciders.add(new GreedyDecider(ng, tg, true));
 		//deciders.add(new ThroughputTradeoffDecider(ng, tg));
 		//deciders.add(new TimeDisplacementDecider(ng, tg));
 
