@@ -11,7 +11,7 @@ public class main {
 		//		int t=1;
 		//		int n=2;
 		//		int rep=3;
-		boolean large = false;
+		boolean large = true;
 
 		int f = 2;
 		int t = 2;
@@ -47,7 +47,7 @@ public class main {
 		eval.evaluateTop();
 		//			eval.calculateInstance_t_n_i(t, n, f, rep, logpath+File.separator, false ,true, decomp);	//recalc
 		//			eval.calculateInstance_t_n_i(t, n, f, rep, logpath+File.separator, true ,false, decomp);	//overwrite
-		eval.parallel(1);
+		eval.parallel(4);
 
 		long start = System.currentTimeMillis();
 

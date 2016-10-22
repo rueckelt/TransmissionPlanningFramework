@@ -56,7 +56,7 @@ public class TradeoffDecider extends GreedyScheduler implements Decider {
 
 		int[][] minVio = cf.vioTpMin(cf.cummulated_f_t(oldSchedule.getSchedule()));
 		Vector<Integer> netIDs = sortNetworkIDs(tg.getFlows().get(f));
-		int[] allocated = { 0, 0, 0, 0 };
+		int[] allocated = new int[ng.getNetworks().size()];
 
 		for (int t = 0; t < ng.getTimeslots(); t++) {
 			if (minVio[f][t] > 0) {
