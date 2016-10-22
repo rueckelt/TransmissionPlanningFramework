@@ -146,7 +146,6 @@ public abstract class Scheduler {
 	 */
 
 	protected boolean verificationOfConstraints(int[][][] schedule_f_t_n1) {
-
 		Vector<Network> networks = ng.getNetworks();
 		Vector<Flow> flows = tg.getFlows();
 		int time = ng.getTimeslots();
@@ -281,6 +280,7 @@ public abstract class Scheduler {
 	 * @return number of allocated chunks
 	 */
 	protected int allocate(int flow, int time, int network, int tokens) {
+		//boolean debugOutput = true;
 		if (!boundsValid(flow, time, network))
 			return 0;
 		if (!interfaceLimit.isUsable(network, time))
@@ -324,7 +324,8 @@ public abstract class Scheduler {
 				return scheduled;
 			} else {
 				if (debugOutput) {
-					System.err.println("Scheduler::allocate. constraint check NOT passed");
+					System.err.println("Scheduler::allocate. constraint check NOT passed. scheduled would have been: "
+							+ scheduled);
 				}
 				return 0;
 			}

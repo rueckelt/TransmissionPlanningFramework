@@ -1,5 +1,5 @@
 
-% 2016-10-21 17:12:57
+% 2016-10-22 13:51:21
 
 % my_logs\jakob\
 max_time = 2;
@@ -8,6 +8,6 @@ max_nets = 2;
 max_rep = 1000;
 evaluate_max_only = 1;
 
-scheduler_logs= {'ML_Prio_Scheduler_type_1_log.m','ML_Prio_Scheduler_type_2_log.m'};
-schedulers= {'ML_Prio_Scheduler_type_1','ML_Prio_Scheduler_type_2'};
+scheduler_logs= {'PostProcess_2_log.m'};
+schedulers= {'PostProcess_2'};
 

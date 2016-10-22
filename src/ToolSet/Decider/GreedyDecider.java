@@ -38,8 +38,11 @@ public class GreedyDecider extends GreedyScheduler implements Decider {
 		while (!br && flows.size() > 0) {
 			//System.out.println("flowIndex: " + flowIndex);
 			scheduleFlow(flows.get(0), false);
+
 			if (oldSchedule.isDifferentSchedule(getTempSchedule())) {
+
 				decisions.add(new Decision(getTempSchedule(), 1, name));
+
 				return decisions;
 			} else {
 				flows.remove(0);

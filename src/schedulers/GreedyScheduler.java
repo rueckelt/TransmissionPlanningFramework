@@ -91,6 +91,8 @@ public class GreedyScheduler extends Scheduler {
 			scheduleFlow(f0, false);
 		}
 		//		System.out.println("greedy done");
+
+		//System.out.println(showSchedule(getTempSchedule()));
 	}
 
 	/**

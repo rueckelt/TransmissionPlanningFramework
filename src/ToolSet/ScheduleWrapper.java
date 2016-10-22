@@ -19,6 +19,12 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 		this.isFinished = false;
 	}
 
+	public ScheduleWrapper(int[][][] schedule) {
+		this.schedule = schedule;
+		this.history = new ArrayList<Decision>();
+		this.isFinished = false;
+	}
+
 	private void initSchedule() {
 		for (int f = 0; f < schedule.length; f++) {
 			for (int t = 0; t < schedule[0].length; t++) {
@@ -89,7 +95,16 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 
 	public boolean isDifferentSchedule(int[][][] anotherSchedule) {
 		//return !Arrays.deepEquals(schedule, anotherSchedule);
-		return !isSimilar(anotherSchedule);
+		for (int f = 0; f < schedule.length; f++) {
+			for (int t = 0; t < schedule[0].length; t++) {
+				for (int n = 0; n < schedule[0][0].length; n++) {
+					if (schedule[f][t][n] != anotherSchedule[f][t][n]) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	public boolean isSimilar(int[][][] anotherSchedule) {
@@ -97,7 +112,10 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 		for (int f = 0; f < schedule.length; f++) {
 			for (int t = 0; t < schedule[0].length; t++) {
 				for (int n = 0; n < schedule[0][0].length; n++) {
-					if (schedule[f][t][n] != anotherSchedule[f][t][n]) {
+					//					if (schedule[f][t][n] != anotherSchedule[f][t][n]) {
+					//						return false;
+					//					}
+					if (Math.abs(schedule[f][t][n] - anotherSchedule[f][t][n]) > 1) {
 						return false;
 					}
 				}
@@ -115,6 +133,14 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 		//			}
 		//		}
 		//		return true;
+	}
+
+	public List<String> deciderHistory() {
+		List<String> result = new ArrayList<String>();
+		for (int i = 0; i < history.size(); i++) {
+			result.add(history.get(i).algorithm);
+		}
+		return result;
 	}
 
 }
