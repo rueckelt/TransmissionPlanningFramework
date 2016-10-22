@@ -9,7 +9,7 @@ import schedulingIOModel.Flow;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
 
-public class GreedyDecider2 extends GreedyDecider {
+public class GreedyDecider2 extends OneStepGreedyDecider {
 
 	public GreedyDecider2(NetworkGenerator ng, FlowGenerator fg, boolean NEW_RATING) {
 		super(ng, fg, NEW_RATING);

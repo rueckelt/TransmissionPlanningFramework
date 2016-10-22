@@ -115,7 +115,7 @@ public class ScheduleWrapper implements Comparable<ScheduleWrapper> {
 					//					if (schedule[f][t][n] != anotherSchedule[f][t][n]) {
 					//						return false;
 					//					}
-					if (Math.abs(schedule[f][t][n] - anotherSchedule[f][t][n]) > 1) {
+					if (Math.abs(schedule[f][t][n] - anotherSchedule[f][t][n]) > 3) {
 						return false;
 					}
 				}

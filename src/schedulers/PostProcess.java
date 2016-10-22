@@ -8,7 +8,8 @@ import ToolSet.CostSeparation;
 import ToolSet.ScheduleWrapper;
 import ToolSet.Decider.Decider;
 import ToolSet.Decider.Decision;
-import ToolSet.Decider.GreedyDecider;
+import ToolSet.Decider.FullGreedyDecider;
+import ToolSet.Decider.OneStepGreedyDecider;
 import ToolSet.Decider.TradeoffDecider;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.FlowGenerator;
@@ -55,53 +56,63 @@ public class PostProcess extends GreedyScheduler {
 		ScheduleWrapper greedy = new ScheduleWrapper(tg.getFlows().size(), ng.getTimeslots(), ng.getNetworks().size());
 		greedy.setSchedule(getTempSchedule());
 		currentLeafs.add(greedy.clone());
-
+		finishedLeafs.add(greedy.clone());
 		List<Decision> decisions;
 		int evaluations = 0;
+		Decider greedyDecider = new FullGreedyDecider(ng, tg, true);
 
-		while (currentLeafs.size() > 0) {
-			//System.out.println("currentLeafs size: " + currentLeafs.size());
-			ScheduleWrapper sw = currentLeafs.remove(0);
-			finishedLeafs.add(sw);
-			decisions = discoverDecisions(sw);
-			//Only consider decisions that are close to the best rating atm
-			//System.out.println("decisions made this round: " + decisions.size());
-
-			//			int consideredIndex = 1;
-			//			while (consideredIndex < decisions.size()
-			//					&& decisions.get(consideredIndex).rating / decisions.get(0).rating > ratingThreshold) {
-			//				consideredIndex++;
-			//			}
-
-			//			for (int i = 0; i < consideredIndex; i++) {
-			for (int i = 0; i < decisions.size(); i++) {
-				ScheduleWrapper newSchedule = sw.clone();
-				newSchedule.addDecision(decisions.get(i));
-				boolean similarExists = false;
-				for (int j = 0; j < finishedLeafs.size(); j++) {
-					if (finishedLeafs.get(j).isSimilar(newSchedule.getSchedule())) {
-						similarExists = true;
-					}
-				}
-				for (int j = 0; j < currentLeafs.size(); j++) {
-					if (currentLeafs.get(j).isSimilar(newSchedule.getSchedule())) {
-						similarExists = true;
-					}
-				}
-				if (!similarExists) {
-					finishedLeafs.add(newSchedule);
-					currentLeafs.add(newSchedule);
-				} else {
-					sme++;
-				}
-			}
-
-			evaluations++;
-			if (evaluations % 100 == 0) {
-				System.out.println("evals: " + evaluations + ", currentLeafs size: " + currentLeafs.size()
-						+ ", finishedLeafs size: " + finishedLeafs.size() + " sme: " + sme);
-			}
+		decisions = discoverDecisions(greedy);
+		for (int i = 0; i < decisions.size(); i++) {
+			ScheduleWrapper newSchedule = new ScheduleWrapper(decisions.get(i).proposedSchedule);
+			newSchedule.addDecision(decisions.get(i));
+			newSchedule = new ScheduleWrapper(greedyDecider.discoverDecisions(newSchedule).get(0).proposedSchedule)
+					.clone();
+			finishedLeafs.add(newSchedule.clone());
 		}
+
+		//		while (currentLeafs.size() > 0){
+		//			//System.out.println("currentLeafs size: " + currentLeafs.size());
+		//			ScheduleWrapper sw = currentLeafs.remove(0);
+		//			finishedLeafs.add(sw);
+		//			decisions = discoverDecisions(sw);
+		//			//Only consider decisions that are close to the best rating atm
+		//			//System.out.println("decisions made this round: " + decisions.size());
+		//
+		//			//			int consideredIndex = 1;
+		//			//			while (consideredIndex < decisions.size()
+		//			//					&& decisions.get(consideredIndex).rating / decisions.get(0).rating > ratingThreshold) {
+		//			//				consideredIndex++;
+		//			//			}
+		//
+		//			//			for (int i = 0; i < consideredIndex; i++) {
+		//			for (int i = 0; i < decisions.size(); i++) {
+		//				ScheduleWrapper newSchedule = sw.clone();
+		//				newSchedule.addDecision(decisions.get(i));
+		//				boolean similarExists = false;
+		//				for (int j = 0; j < finishedLeafs.size(); j++) {
+		//					if (finishedLeafs.get(j).isSimilar(newSchedule.getSchedule())) {
+		//						similarExists = true;
+		//					}
+		//				}
+		//				for (int j = 0; j < currentLeafs.size(); j++) {
+		//					if (currentLeafs.get(j).isSimilar(newSchedule.getSchedule())) {
+		//						similarExists = true;
+		//					}
+		//				}
+		//				if (!similarExists) {
+		//					finishedLeafs.add(newSchedule);
+		//					currentLeafs.add(newSchedule);
+		//				} else {
+		//					sme++;
+		//				}
+		//			}
+		//
+		//			evaluations++;
+		//			if (evaluations % 100 == 0) {
+		//				System.out.println("evals: " + evaluations + ", currentLeafs size: " + currentLeafs.size()
+		//						+ ", finishedLeafs size: " + finishedLeafs.size() + " sme: " + sme);
+		//			}
+		//		}
 
 		int minIndex = 0;
 		int minCost = Integer.MAX_VALUE;
@@ -122,7 +133,9 @@ public class PostProcess extends GreedyScheduler {
 		}
 		this.setTempSchedule(finishedLeafs.get(minIndex).getSchedule());
 		//System.out.println("totalcost: " + finishedLeafs.get(minIndex).getTotalCost());
-		if (!verificationOfConstraints(finishedLeafs.get(minIndex).getSchedule())) {
+		if (!
+
+		verificationOfConstraints(finishedLeafs.get(minIndex).getSchedule())) {
 			System.err.println("stuff is weird!");
 		}
 
@@ -145,7 +158,7 @@ public class PostProcess extends GreedyScheduler {
 			deciders.add(new TradeoffDecider(ng, tg, true));
 			break;
 		case 2:
-			deciders.add(new GreedyDecider(ng, tg, true));
+			deciders.add(new OneStepGreedyDecider(ng, tg, true));
 			deciders.add(new TradeoffDecider(ng, tg, true));
 			break;
 		default:

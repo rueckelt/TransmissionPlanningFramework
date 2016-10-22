@@ -8,7 +8,7 @@ import ToolSet.CostSeparation;
 import ToolSet.ScheduleWrapper;
 import ToolSet.Decider.Decider;
 import ToolSet.Decider.Decision;
-import ToolSet.Decider.GreedyDecider;
+import ToolSet.Decider.OneStepGreedyDecider;
 import ToolSet.Decider.TradeoffDecider;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.FlowGenerator;
@@ -89,7 +89,7 @@ public class testProcess extends GreedyScheduler {
 			deciders.add(new TradeoffDecider(ng, tg, true));
 			break;
 		case 2:
-			deciders.add(new GreedyDecider(ng, tg, true));
+			deciders.add(new OneStepGreedyDecider(ng, tg, true));
 			deciders.add(new TradeoffDecider(ng, tg, true));
 			break;
 		default:

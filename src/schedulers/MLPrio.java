@@ -8,7 +8,7 @@ import ToolSet.CostSeparation;
 import ToolSet.ScheduleWrapper;
 import ToolSet.Decider.Decider;
 import ToolSet.Decider.Decision;
-import ToolSet.Decider.GreedyDecider;
+import ToolSet.Decider.OneStepGreedyDecider;
 import ToolSet.Decider.GreedyDecider2;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.FlowGenerator;
@@ -113,16 +113,16 @@ public class MLPrio extends Scheduler {
 		//Add deciders here
 		switch (config) {
 		case 1:
-			deciders.add(new GreedyDecider(ng, tg, true));
-			deciders.add(new GreedyDecider(ng, tg, false));
+			deciders.add(new OneStepGreedyDecider(ng, tg, true));
+			deciders.add(new OneStepGreedyDecider(ng, tg, false));
 			break;
 		case 2:
-			deciders.add(new GreedyDecider(ng, tg, true));
+			deciders.add(new OneStepGreedyDecider(ng, tg, true));
 			deciders.add(new GreedyDecider2(ng, tg, true));
 			//deciders.add(new TimeDisplacementDecider(ng, tg));
 			break;
 		default:
-			deciders.add(new GreedyDecider(ng, tg, true));
+			deciders.add(new OneStepGreedyDecider(ng, tg, true));
 			break;
 		}
 

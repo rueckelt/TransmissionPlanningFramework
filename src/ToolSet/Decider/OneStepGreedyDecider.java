@@ -13,10 +13,10 @@ import schedulingIOModel.NetworkGenerator;
  * @author Jakob
  *
  */
-public class GreedyDecider extends GreedyScheduler implements Decider {
+public class OneStepGreedyDecider extends GreedyScheduler implements Decider {
 	protected String name;
 
-	public GreedyDecider(NetworkGenerator ng, FlowGenerator fg, boolean NEW_RATING) {
+	public OneStepGreedyDecider(NetworkGenerator ng, FlowGenerator fg, boolean NEW_RATING) {
 		super(ng, fg);
 		name = "GreedyDecider";
 		newRating(NEW_RATING);

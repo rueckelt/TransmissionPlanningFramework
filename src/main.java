@@ -11,7 +11,7 @@ public class main {
 		//		int t=1;
 		//		int n=2;
 		//		int rep=3;
-		boolean large = true;
+		boolean large = false;
 
 		int f = 2;
 		int t = 2;
