@@ -8,9 +8,11 @@ import ToolSet.CostSeparation;
 import ToolSet.ScheduleWrapper;
 import ToolSet.Decider.Decider;
 import ToolSet.Decider.Decision;
+import ToolSet.Decider.FillUpDecider;
 import ToolSet.Decider.FullGreedyDecider;
-import ToolSet.Decider.OneStepGreedyDecider;
-import ToolSet.Decider.TradeoffDecider;
+import ToolSet.Decider.FullTimeGreedyDecider;
+import ToolSet.Decider.vioMinFixer;
+import ToolSet.Decider.vioNonFixer;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
@@ -21,7 +23,6 @@ public class PostProcess extends GreedyScheduler {
 	protected List<Decider> deciders;
 	protected List<ScheduleWrapper> currentLeafs;
 	protected List<ScheduleWrapper> finishedLeafs;
-	private static int totalEvaluations = 0;
 	protected int config;
 	/*
 	 * if this is 0, all scheduling decisions will be evaluated
@@ -50,24 +51,40 @@ public class PostProcess extends GreedyScheduler {
 		//
 		//			System.out.println("$$$$$$$$$");
 		//		}
-		int sme = 0;
-
+		int passes = 2;
 		super.calculateInstance_internal(logfile);
 		ScheduleWrapper greedy = new ScheduleWrapper(tg.getFlows().size(), ng.getTimeslots(), ng.getNetworks().size());
 		greedy.setSchedule(getTempSchedule());
 		currentLeafs.add(greedy.clone());
-		finishedLeafs.add(greedy.clone());
 		List<Decision> decisions;
 		int evaluations = 0;
-		Decider greedyDecider = new FullGreedyDecider(ng, tg, true);
+		Decider greedyDeciderH2 = new FullGreedyDecider(ng, tg, true);
+		Decider greedyDecider = new FullGreedyDecider(ng, tg, false);
+		for (int x = 0; x < passes; x++) {
 
-		decisions = discoverDecisions(greedy);
-		for (int i = 0; i < decisions.size(); i++) {
-			ScheduleWrapper newSchedule = new ScheduleWrapper(decisions.get(i).proposedSchedule);
-			newSchedule.addDecision(decisions.get(i));
-			newSchedule = new ScheduleWrapper(greedyDecider.discoverDecisions(newSchedule).get(0).proposedSchedule)
-					.clone();
-			finishedLeafs.add(newSchedule.clone());
+			decisions = new ArrayList<Decision>();
+			for (int y = 0; y < currentLeafs.size(); y++) {
+				decisions.addAll(discoverDecisions(currentLeafs.get(y)));
+				finishedLeafs.add(currentLeafs.get(y));
+			}
+			currentLeafs = new ArrayList<ScheduleWrapper>();
+
+			for (int i = 0; i < decisions.size(); i++) {
+				ScheduleWrapper newSchedule = new ScheduleWrapper(decisions.get(i).proposedSchedule);
+				newSchedule.addDecision(decisions.get(i));
+				newSchedule = new ScheduleWrapper(
+						greedyDeciderH2.discoverDecisions(newSchedule).get(0).proposedSchedule).clone();
+				currentLeafs.add(newSchedule.clone());
+			}
+		}
+		Decider fill = new FillUpDecider(ng, tg, true);
+		for (int i = 0; i < finishedLeafs.size(); i++) {
+			List<Decision> dec = fill.discoverDecisions(finishedLeafs.get(i));
+			if (dec.size() != 0) {
+				finishedLeafs
+						.add(new ScheduleWrapper(fill.discoverDecisions(finishedLeafs.get(i)).get(0).proposedSchedule)
+								.clone());
+			}
 		}
 
 		//		while (currentLeafs.size() > 0){
@@ -124,7 +141,7 @@ public class PostProcess extends GreedyScheduler {
 			}
 
 		}
-		System.out.println("minIndex: " + minIndex);
+		//System.out.println("minIndex: " + minIndex);
 		for (int i = 0; i < finishedLeafs.size(); i++) {
 			//			System.out.println(i + ":\t" + finishedLeafs.get(i).getTotalCost());
 			//System.out.println(finishedLeafs.get(i).deciderHistory());
@@ -139,9 +156,6 @@ public class PostProcess extends GreedyScheduler {
 			System.err.println("stuff is weird!");
 		}
 
-		//System.out.println("Total number of evaluations for this schedule: " + evaluations);
-		totalEvaluations += evaluations;
-		System.out.println("Total number of evaluations: " + totalEvaluations);
 	}
 
 	private void initVariables() {
@@ -152,16 +166,28 @@ public class PostProcess extends GreedyScheduler {
 
 		//Add deciders here
 		switch (config) {
-		case 1:
-			//deciders.add(new GreedyDecider(ng, tg, true));
+		case 1://First 300: 111.29
+			deciders.add(new FullGreedyDecider(ng, tg, true));
+			deciders.add(new vioMinFixer(ng, tg, true));
+			deciders.add(new vioNonFixer(ng, tg, true));
+			deciders.add(new FullTimeGreedyDecider(ng, tg, true));
 			//deciders.add(new FillUpDecider(ng, tg, true));
-			deciders.add(new TradeoffDecider(ng, tg, true));
 			break;
-		case 2:
-			deciders.add(new OneStepGreedyDecider(ng, tg, true));
-			deciders.add(new TradeoffDecider(ng, tg, true));
+		case 2://First 300: 112.03
+			deciders.add(new FullGreedyDecider(ng, tg, true));
+			deciders.add(new vioMinFixer(ng, tg, true));
+			//deciders.add(new vioNonFixer(ng, tg, true));
+			deciders.add(new FullTimeGreedyDecider(ng, tg, true));
+			//deciders.add(new FillUpDecider(ng, tg, true));
 			break;
-		default:
+		case 3:
+			deciders.add(new FullGreedyDecider(ng, tg, true));
+			deciders.add(new vioMinFixer(ng, tg, true));
+			deciders.add(new vioNonFixer(ng, tg, true));
+			deciders.add(new FullTimeGreedyDecider(ng, tg, true));
+			deciders.add(new FillUpDecider(ng, tg, true));
+			break;
+		default://First 300: 
 			//deciders.add(new GreedyDecider(ng, tg, true));
 			break;
 		}

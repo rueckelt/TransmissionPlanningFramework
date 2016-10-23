@@ -31,7 +31,6 @@ public class FillUpDecider extends GreedyScheduler implements Decider {
 			initCostSeparation();
 		}
 		if (sw.deciderHistory().contains("FillUpDecider")) {
-			System.err.println("skiiiiiip");
 			return new ArrayList<Decision>();
 		}
 
@@ -64,14 +63,20 @@ public class FillUpDecider extends GreedyScheduler implements Decider {
 					//					System.out.println("f:" + f + ";   t:" + t + ";   n:" + n + ";   getRemainingNetCap: "
 					//							+ getRemainingNetCap(n, t) + ";   getTempSchedule()[f][t][n]:" + getTempSchedule()[f][t][n]
 					//							+ ";   tokensLeft: " + tokensLeft);
-					int allocated = allocate(f, t, n, 12);
-					tokensLeft -= allocated;
+					while (allocate(f, t, n, 1) != 0) {
+						tokensLeft--;
+					}
+					//int allocated = allocate(f, t, n, getRemainingNetCap(n, t));
+					//tokensLeft -= allocated;
 				}
 			}
 		}
 
 		//		System.out.println("f: " + f + ";   newly allocated: " + (oldTokensLeft - tokensLeft));
 		//		System.out.println("f: " + f + ";   still missing: " + (tokensLeft));
+		if (oldTokensLeft != tokensLeft) {
+			//System.err.println("filled up: " + (oldTokensLeft - tokensLeft));
+		}
 		return oldTokensLeft - tokensLeft;
 	}
 
@@ -105,10 +110,7 @@ public class FillUpDecider extends GreedyScheduler implements Decider {
 				return flowCrit_tmp.get(i2) - flowCrit_tmp.get(i1);
 			}
 		}); //highest priority first
-		for (int i = 0; i < flow_order.size(); i++) {
-			System.out.print(flowCriticality.get(flow_order.get(i)) + ",");
-		}
-		System.out.println("----------");
+
 		return flow_order;
 	}
 

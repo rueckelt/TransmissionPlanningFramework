@@ -9,7 +9,7 @@ import ToolSet.ScheduleWrapper;
 import ToolSet.Decider.Decider;
 import ToolSet.Decider.Decision;
 import ToolSet.Decider.OneStepGreedyDecider;
-import ToolSet.Decider.TradeoffDecider;
+import ToolSet.Decider.vioMinFixer;
 import schedulingIOModel.CostFunction;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
@@ -60,7 +60,7 @@ public class testProcess extends GreedyScheduler {
 
 		ScheduleWrapper test = greedy.clone();
 		//System.out.println(showSchedule(test.getSchedule()));
-		test.setSchedule(new TradeoffDecider(ng, tg, true).discoverDecisions(test).get(0).proposedSchedule);
+		test.setSchedule(new vioMinFixer(ng, tg, true).discoverDecisions(test).get(0).proposedSchedule);
 		//		for (int f = 0; f < getTempSchedule().length; f++) {
 		//			for (int t = 0; t < getTempSchedule()[0].length; t++) {
 		//				for (int n = 0; n < getTempSchedule()[0][0].length; n++) {
@@ -86,11 +86,11 @@ public class testProcess extends GreedyScheduler {
 		case 1:
 			//deciders.add(new GreedyDecider(ng, tg, true));
 			//deciders.add(new FillUpDecider(ng, tg, true));
-			deciders.add(new TradeoffDecider(ng, tg, true));
+			deciders.add(new vioMinFixer(ng, tg, true));
 			break;
 		case 2:
 			deciders.add(new OneStepGreedyDecider(ng, tg, true));
-			deciders.add(new TradeoffDecider(ng, tg, true));
+			deciders.add(new vioMinFixer(ng, tg, true));
 			break;
 		default:
 			//deciders.add(new GreedyDecider(ng, tg, true));
