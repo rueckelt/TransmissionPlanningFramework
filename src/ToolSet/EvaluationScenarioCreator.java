@@ -107,8 +107,8 @@ public class EvaluationScenarioCreator {
 		//schedulers.add(new MLPrio(ng, tg, 1, 0.0));
 		//schedulers.add(new MLPrio(ng, tg, 2, 0.0));
 		//schedulers.add(new PostProcess(ng, tg, 2, 0));
-		//schedulers.add(new PostProcess(ng, tg, 1, 0));
-		//schedulers.add(new testProcess(ng, tg, 2, 0));
+		schedulers.add(new PostProcess(ng, tg, 1, 0));
+		schedulers.add(new PostProcess(ng, tg, 2, 0));
 		schedulers.add(new PostProcess(ng, tg, 0, 0));
 		//schedulers.add(new PostProcess(ng, tg, 3, 0));
 		//schedulers.add(new RandomScheduler(ng, tg, 200)); //200 random runs of this scheduler. Returns average duration and cost

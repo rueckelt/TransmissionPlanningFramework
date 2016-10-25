@@ -22,7 +22,6 @@ public class main {
 		int t = 2;
 		int n = 2;
 		int rep = Integer.parseInt(args[0]);
-		rep = 300;
 		//		String logpath= "my_logs"+File.separator+"short_test";
 		//		String logpath= "my_logs"+File.separator+"test";
 
@@ -57,7 +56,7 @@ public class main {
 
 		long start = System.currentTimeMillis();
 
-		eval.start();
+		//eval.start();
 		long finish = System.currentTimeMillis();
 
 		System.out.println("done in: " + (finish - start) + " ms");
