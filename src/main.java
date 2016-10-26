@@ -56,7 +56,7 @@ public class main {
 
 		long start = System.currentTimeMillis();
 
-		//eval.start();
+		eval.start();
 		long finish = System.currentTimeMillis();
 
 		System.out.println("done in: " + (finish - start) + " ms");
