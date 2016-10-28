@@ -142,18 +142,18 @@ public class PostProcess extends GreedyScheduler {
 
 		}
 		//System.out.println("minIndex: " + minIndex);
-		for (int i = 0; i < finishedLeafs.size(); i++) {
-			//			System.out.println(i + ":\t" + finishedLeafs.get(i).getTotalCost());
-			//System.out.println(finishedLeafs.get(i).deciderHistory());
-			//System.out.println(finishedLeafs.get(i).getTotalCost());
-			//System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%");
-		}
+		//		for (int i = 0; i < finishedLeafs.size(); i++) {
+		//						System.out.println(i + ":\t" + finishedLeafs.get(i).getTotalCost());
+		//			System.out.println(finishedLeafs.get(i).deciderHistory());
+		//			System.out.println(finishedLeafs.get(i).getTotalCost());
+		//			System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%");
+		//		}
 		this.setTempSchedule(finishedLeafs.get(minIndex).getSchedule());
 		//System.out.println("totalcost: " + finishedLeafs.get(minIndex).getTotalCost());
-		if (!
-
-		verificationOfConstraints(finishedLeafs.get(minIndex).getSchedule())) {
-			System.err.println("stuff is weird!");
+		if (!verificationOfConstraints(finishedLeafs.get(minIndex).getSchedule())) {
+			throw new IllegalStateException("least cost schedule is not legal!");
+		} else {
+			System.out.println("is ok");
 		}
 
 	}

@@ -1,5 +1,5 @@
 
-% 2016-10-26 18:09:16
+% 2016-10-28 15:02:41
 
 % my_logs\jakob\
 max_time = 2;
@@ -8,6 +8,6 @@ max_nets = 2;
 max_rep = 1000;
 evaluate_max_only = 1;
 
-scheduler_logs= {'PostProcess_1_log.m','PostProcess_2_log.m','PostProcess_0_log.m'};
-schedulers= {'PostProcess_1','PostProcess_2','PostProcess_0'};
+scheduler_logs= {'FullBranch_2_log.m'};
+schedulers= {'FullBranch_2'};
 

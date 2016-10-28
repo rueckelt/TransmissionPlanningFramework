@@ -8,7 +8,7 @@ import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import schedulers.PostProcess;
+import schedulers.FullBranch;
 import schedulers.Scheduler;
 import schedulingIOModel.FlowGenerator;
 import schedulingIOModel.NetworkGenerator;
@@ -105,11 +105,11 @@ public class EvaluationScenarioCreator {
 		//schedulers.add(new GreedySchedulerCriticalityGT(ng, tg, schedule));
 		//schedulers.add(new MLPrio(ng, tg, 0, 0.0));
 		//schedulers.add(new MLPrio(ng, tg, 1, 0.0));
-		//schedulers.add(new MLPrio(ng, tg, 2, 0.0));
+		schedulers.add(new FullBranch(ng, tg, 2, 0.0));
 		//schedulers.add(new PostProcess(ng, tg, 2, 0));
-		schedulers.add(new PostProcess(ng, tg, 1, 0));
-		schedulers.add(new PostProcess(ng, tg, 2, 0));
-		schedulers.add(new PostProcess(ng, tg, 0, 0));
+		//schedulers.add(new PostProcess(ng, tg, 1, 0));
+		//schedulers.add(new PostProcess(ng, tg, 2, 0));
+		//schedulers.add(new PostProcess(ng, tg, 0, 0));
 		//schedulers.add(new PostProcess(ng, tg, 3, 0));
 		//schedulers.add(new RandomScheduler(ng, tg, 200)); //200 random runs of this scheduler. Returns average duration and cost
 
