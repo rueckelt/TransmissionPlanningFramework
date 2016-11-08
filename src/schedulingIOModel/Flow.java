@@ -1,0 +1,566 @@
+package schedulingIOModel;
+import java.io.Serializable;
+import java.util.concurrent.atomic.AtomicInteger;
+
+import javax.sound.sampled.ReverbType;
+
+import schedulers.PriorityScheduler;
+import schedulers.Scheduler;
+import ToolSet.RndInt;
+
+
+public class Flow implements Serializable, Cloneable{
+	
+	//default flow = now special requirements, no chunks
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5197541708853992326L;
+	private int tokens=0;
+	private int deadline=100000;
+	private int startTime=0;
+	
+	//at least n chunks in t time slots ### lower throughput limit
+	private int windowMin=100000;
+	private int tokensMin=1;
+	//at most n chunks in t time slots (data is not prduced faster/ slow transmitter) ## upper throughput limit
+	private int windowMax=1;
+	private int tokensMax=100000;
+	
+	private int reqJitter=10;		//low value if low jitter required
+	private int reqLatency=10;		//low value if low latency required
+	
+	//importance values
+	private int impDeadline=0;
+	private int impStartTime=0;
+	private int impThroughputMin=0;
+	private int impThrouthputMax=0;
+	private int impUnsched=5;
+	private int impLatency=0;
+	private int impJitter=0;
+	
+	private int impUser=1;
+	private String flowName="flow";
+	private boolean isBufferable;
+	private int type;
+
+	//each flow gets a unique ID
+	private static AtomicInteger NEXT_ID = new AtomicInteger(0);
+    int id = getNextId().getAndIncrement();
+    
+    private int index=-1;	//not set
+
+    public Flow() {
+    	////System.out.println(id);
+    	setIndex(id);
+    }
+    //set ID externally; use -1 to create new id
+    public void setId(int id) {
+    	if(id<0){
+    		id=getNextId().getAndIncrement();
+//    		setIndex(id);
+    	}else{
+    		this.id = id;
+    	}	
+    }
+    
+    public void setIndex(int i){
+    	index=i;
+    }
+    public int getIndex(){
+    	return index;
+    }
+    
+    public int getId() {
+         return id;
+    }
+
+
+	public int getTokens() {
+		return getChunks();
+	}
+
+
+	public void setTokens(int chunks) {
+		this.setChunks(chunks);
+	}
+
+
+	public int getDeadline() {
+		return deadline;
+	}
+
+
+	public void setDeadline(int deadline) {
+		this.deadline = deadline;
+	}
+
+
+	public int getStartTime() {
+		return startTime;
+	}
+
+
+	public void setStartTime(int startTime) {
+		this.startTime = startTime;
+	}
+
+
+	public int getWindowMin() {
+		return windowMin;
+	}
+
+
+	public void setWindowMin(int windowMin) {
+		this.windowMin = windowMin;
+	}
+
+
+	public int getTokensMin() {
+		return tokensMin;
+	}
+
+
+	public void setTokensMin(int tokensMin) {
+		this.tokensMin = tokensMin;
+	}
+
+
+	public int getWindowMax() {
+		return windowMax;
+	}
+
+
+	public void setWindowMax(int windowMax) {
+		this.windowMax = windowMax;
+	}
+
+
+	public int getTokensMax() {
+		return tokensMax;
+	}
+
+
+	public void setTokensMax(int tokensMax) {
+		this.tokensMax = tokensMax;
+	}
+
+
+	public int getReqLatency() {
+		return reqLatency;
+	}
+
+
+	public void setReqLatency(int reqLatency) {
+		this.reqLatency = reqLatency;
+	}
+
+
+	public int getReqJitter() {
+		return reqJitter;
+	}
+
+
+	public void setReqJitter(int reqJitter) {
+		this.reqJitter = reqJitter;
+	}
+
+
+	public int getImpDeadline() {
+		return impDeadline;
+	}
+
+
+	public void setImpDeadline(int impDeadline) {
+		this.impDeadline = impDeadline;
+	}
+
+
+	public int getImpStartTime() {
+		return impStartTime;
+	}
+
+
+	public void setImpStartTime(int impStartTime) {
+		this.impStartTime = impStartTime;
+	}
+
+
+	public int getImpThroughputMin() {
+		return impThroughputMin;
+	}
+
+
+	public void setImpThroughputMin(int impThroughputMin) {
+		this.impThroughputMin = impThroughputMin;
+	}
+
+
+	public int getImpThroughputMax() {
+		return impThrouthputMax;
+	}
+
+//	Hard constraint --> does not exist anymore
+//	public void setImpThrouthputMax(int impThrouthputMax) {
+//		this.impThrouthputMax = impThrouthputMax;
+//	}
+
+
+	public int getImpUnsched() {
+		return impUnsched;
+	}
+
+
+	public void setImpUnsched(int impUnsched) {
+		this.impUnsched = impUnsched;
+	}
+
+
+	public int getImpLatency() {
+		return impLatency;
+	}
+
+
+	public void setImpLatency(int impLatency) {
+		this.impLatency = impLatency;
+	}
+
+
+	public int getImpJitter() {
+		return impJitter;
+	}
+
+
+	public void setImpJitter(int impJitter) {
+		this.impJitter = impJitter;
+	}
+	
+	
+	public int getImpUser() {
+		return impUser;
+	}
+
+
+	public void setImpUser(int impUser) {
+		this.impUser = impUser;
+	}
+
+
+	/**
+	 * Creates data flow with high minimum throughput importance
+	 * Throughput might be higher (higher voice quality) but importance for scheduling
+	 * these additional tokens is lower
+	 * start time and deadline are important because its real-time traffic
+	 * 
+	 * @param startTime
+	 * @param deadline
+	 * @return
+	 */
+	public static Flow LiveStram(int startTime, int deadline, int tokens){
+		Flow liveStram = new Flow();
+		int chunks_per_slot = tokens/(deadline-startTime);
+		liveStram.setBufferable(false);
+
+		liveStram.setStartTime(startTime);
+		liveStram.setDeadline(deadline);
+		liveStram.setTokens(tokens);
+		
+		//lower throughput window
+		liveStram.setWindowMin(1);
+		liveStram.setTokensMin(chunks_per_slot/RndInt.get(1,4));
+		liveStram.setImpThroughputMin(50);		//should deliver all tokens --> high priority (10? more? what should be max?)
+		liveStram.setImpDeadline(20); 			// call is over after deadline --> high prio
+		
+		liveStram.setReqJitter(4);
+		liveStram.setReqLatency(4);			//low latency, low jitter
+		
+		//upper throughput window
+		liveStram.setWindowMax(1);
+		liveStram.setTokensMax(chunks_per_slot);		//higher throughput possible: higher voice quality!
+		liveStram.setImpStartTime(10);			//data not existent before call --> high prio
+		
+		liveStram.setImpUnsched(4 + RndInt.get(-1, 2));		//lower priority for unscheduled than for deadline violation
+		liveStram.setImpJitter(8 + RndInt.get(-1, 1));			//jitter and latency are important
+		liveStram.setImpLatency(8 + RndInt.get(-1, 1));
+		
+		liveStram.setImpUser(9 + RndInt.get(-1, 2));
+		liveStram.setFlowName("LiveStream");
+		
+		return liveStram;
+	}
+	
+	public static Flow LiveStram(int startTime, int deadline, int tokens, boolean random){
+		Flow liveStram = new Flow();
+		int chunks_per_slot = tokens/(deadline-startTime);
+		liveStram.setBufferable(false);
+		liveStram.setStartTime(startTime);
+		liveStram.setDeadline(deadline);
+		liveStram.setTokens(tokens);
+		
+		//lower throughput window
+		liveStram.setWindowMin(1);
+		if (random) {
+			liveStram.setTokensMin(chunks_per_slot/RndInt.get(1,4));
+		} else {
+			liveStram.setTokensMin(chunks_per_slot/2);
+		}
+		liveStram.setImpThroughputMin(50);		//should deliver all tokens --> high priority (10? more? what should be max?)
+		liveStram.setImpDeadline(20); 			// call is over after deadline --> high prio
+		
+		liveStram.setReqJitter(4);
+		liveStram.setReqLatency(4);			//low latency, low jitter
+		
+		//upper throughput window
+		liveStram.setWindowMax(1);
+		liveStram.setTokensMax(chunks_per_slot);		//higher throughput possible: higher voice quality!
+		liveStram.setImpStartTime(10);			//data not existent before call --> high prio
+		
+		if (random) {
+			liveStram.setImpUnsched(4 + RndInt.get(-1, 2));		//lower priority for unscheduled than for deadline violation
+			liveStram.setImpJitter(8 + RndInt.get(-1, 1));			//jitter and latency are important
+			liveStram.setImpLatency(8 + RndInt.get(-1, 1));
+			
+			liveStram.setImpUser(9 + RndInt.get(-1, 2));
+		} else {
+			liveStram.setImpUnsched(3);		//lower priority for unscheduled than for deadline violation
+			liveStram.setImpJitter(8);			//jitter and latency are important
+			liveStram.setImpLatency(8);
+			
+			liveStram.setImpUser(9);
+		}
+
+		liveStram.setFlowName("LiveStream");
+		
+		return liveStram;
+	}
+	public static Flow BufferableStream(int startTime, int length, int tokens){
+		Flow stream = new Flow();
+		int chunks_per_slot=tokens/length;	//stream quality may vary
+		stream.setBufferable(true);
+		stream.setStartTime(startTime);
+		stream.setDeadline(startTime+length);
+		stream.setTokens(tokens);
+		
+		//relaxed window
+		int win_size = 10 + length/RndInt.get(3, 8);		//allowed to be bursty (large window): window is at least 10 slots wide
+		stream.setWindowMin(win_size);
+		stream.setTokensMin(win_size*chunks_per_slot/4);	//at least one forth of the data must pass (low quality video) more data scales quality
+		stream.setImpThroughputMin(7+ RndInt.get(-1, 1));		//straight minimum throughput limit
+		stream.setImpDeadline(7+ RndInt.get(-2, 2)); 			
+		
+		stream.setImpStartTime(1+ RndInt.get(0, 4));			//later start time is ok 	
+		
+		stream.setImpUnsched(5+ RndInt.get(-1, 1));			//unscheduled chunks may adapt video quality
+		
+		stream.setImpUser(7+ RndInt.get(-2, 2));
+		stream.setFlowName("BufferableStream");
+		
+		return stream;
+	}
+	
+	public static Flow BufferableStream(int startTime, int length, int tokens, boolean random){
+		Flow stream = new Flow();
+		int chunks_per_slot=tokens/length;	//stream quality may vary
+		stream.setBufferable(true);
+		stream.setStartTime(startTime);
+		stream.setDeadline(startTime+length);
+		stream.setTokens(tokens);
+		
+		//relaxed window
+		int win_size = 10 + length/RndInt.get(3, 8);		//allowed to be bursty (large window): window is at least 10 slots wide
+		stream.setWindowMin(win_size);
+		stream.setTokensMin(win_size*chunks_per_slot/4);	//at least one forth of the data must pass (low quality video) more data scales quality
+		if (random) {
+			stream.setImpThroughputMin(7+ RndInt.get(-1, 1));		//straight minimum throughput limit
+			stream.setImpDeadline(7+ RndInt.get(-2, 2)); 	
+			stream.setImpStartTime(1+ RndInt.get(0, 4));			//later start time is ok 	
+			
+			stream.setImpUnsched(5+ RndInt.get(-1, 1));			//unscheduled chunks may adapt video quality
+			
+			stream.setImpUser(7+ RndInt.get(-2, 2));
+		} else {
+			stream.setImpThroughputMin(7);		//straight minimum throughput limit
+			stream.setImpDeadline( startTime + length);//7); 
+			stream.setImpStartTime(startTime);//2);			//later start time is ok 	
+			
+			stream.setImpUnsched(5);			//unscheduled chunks may adapt video quality
+			
+			stream.setImpUser(7);
+		}
+		
+		stream.setImpStartTime(startTime);			//later start time is ok 	
+		
+		stream.setImpUnsched(5);			//unscheduled chunks may adapt video quality
+		
+		stream.setImpUser(7);
+		stream.setFlowName("BufferableStream");
+		
+		return stream;
+	}
+	
+	//a burst of interaction
+		public static Flow Interactive(int startTime, int tokens){
+			Flow userRequest = new Flow();
+			int deadline = startTime + RndInt.getGauss(2,25); //interaction "bursts" covering 2-25 time slots
+			
+			userRequest.setStartTime(startTime);
+			userRequest.setDeadline(deadline);
+			userRequest.setTokens(tokens);	
+			
+			userRequest.setImpUnsched(15 + RndInt.get(-3, 3));			//all chunks should be scheduled within the deadline		
+			userRequest.setImpUser(7 + RndInt.get(-1, 3));
+			userRequest.setImpDeadline(8 + RndInt.get(-1, 1));
+			userRequest.setImpStartTime(8 + RndInt.get(-1, 1));
+			
+			//we model interactive traffic as burst of interactions that
+			//must be transmitted quite steadily
+			int win_size=3;
+			int chunks_per_win=Math.min(1, win_size*tokens/(deadline-startTime));
+			userRequest.setWindowMin(win_size);
+			userRequest.setTokensMin(chunks_per_win);	
+			userRequest.setImpThroughputMin(3+ RndInt.get(-1, 1));		//soft minimum throughput limit
+			
+			userRequest.setFlowName("Interactive");
+			return userRequest;
+		}
+	
+	
+	public static Flow Background(int tokens, int deadline){
+		Flow background = new Flow();
+		background.setBufferable(true);
+		background.setTokens(tokens);
+		background.setImpUnsched(RndInt.get(1, 4));			//chunks should be scheduled with low priority
+		
+		background.setImpUser(RndInt.get(1, 3));
+		
+		//set a weak deadline
+		background.setDeadline(deadline);
+//		background.setImpDeadline(RndInt.get(0,4));
+		background.setFlowName("Background");
+		return background;
+	}
+	
+	public static Flow Background(int tokens, int startTime, int deadline){
+		Flow background = new Flow();
+		background.setBufferable(true);
+
+		background.setTokens(tokens);
+		background.setStartTime(startTime);
+		background.setImpUnsched(RndInt.get(1, 4));			//chunks should be scheduled with low priority
+//		background.set
+		background.setReqLatency(50);
+		background.setImpUser(4+ RndInt.get(-1, 3));
+
+		
+		//set a weak deadline
+		background.setDeadline(deadline);
+//		background.setImpDeadline(RndInt.get(0,4));
+		background.setFlowName("Background");
+		return background;
+	}
+	
+	public static Flow Background(int tokens, int startTime, int deadline, boolean random){
+		Flow background = new Flow();
+		background.setBufferable(true);
+
+		background.setTokens(tokens);
+		background.setStartTime(startTime);
+		if (random) {
+			background.setImpUnsched(RndInt.get(1, 4));			//chunks should be scheduled with low priority
+			background.setImpUser(4+ RndInt.get(-1, 3));
+		} else {
+			background.setImpUnsched(2);			//chunks should be scheduled with low priority
+			background.setImpUser(5);
+		}
+//		background.set
+		background.setReqLatency(25);
+
+		
+		//set a weak deadline
+		background.setDeadline(deadline);
+//		background.setImpDeadline(RndInt.get(0,4));
+		background.setFlowName("Background");
+		return background;
+	}
+	
+	
+	public Flow clone(){  
+		try {
+			Flow f = new Flow();
+			f.tokens=tokens;
+			f.tokensMax=tokensMax;
+			f.tokensMin=tokensMin;
+			f.deadline=deadline;
+			f.id=id;
+			//f.index=index;
+			f.impDeadline=impDeadline;
+			f.impJitter=impJitter;
+			f.impLatency=impLatency;
+			f.impStartTime=impStartTime;
+			f.impThroughputMin=impThroughputMin;
+			f.impThrouthputMax=impThrouthputMax;
+			f.impUnsched=impUnsched;
+			f.impUser=impUser;
+			f.reqJitter=reqJitter;
+			f.reqLatency=reqLatency;
+			f.startTime=startTime;
+			f.windowMax=windowMax;
+			f.windowMin=windowMin;
+			f.flowName=flowName;
+			return f;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}  
+	}
+
+	public String toString(){
+		String s = flowName;
+		
+		s+="\tst "+startTime+"\tdl "+deadline+"\ttokens "+tokens+"\twin_min "+windowMin+"\ttok_min "+tokensMin;
+		s+="jitter: " + reqJitter + "\t latency: " + reqLatency + "\n";
+		s+= "latencyImp: " + getImpLatency() + "\t";
+		s+= "jitterImp: " + getImpJitter() + "\t";
+		s+= "impUser" + getImpUser() + "\t";
+		s+= "flowId: " + getId() + " - index: " + getIndex() + "\t";
+		s+= "bufferable: " + isBufferable()+ "\n";
+		
+		return s;
+		
+		
+	}
+
+	public String getFlowName() {
+		return flowName;
+	}
+
+	private void setFlowName(String flowName) {
+		this.flowName = flowName;
+	}
+
+	public int getChunks() {
+		return tokens;
+	}
+
+	public void setChunks(int chunks) {
+		this.tokens = chunks;
+	}
+
+	public boolean isBufferable() {
+		return isBufferable;
+	}
+
+	public void setBufferable(boolean isBufferable) {
+		this.isBufferable = isBufferable;
+	}
+	public static AtomicInteger getNextId() {
+		return NEXT_ID;
+	} 
+	public static void setNextId(AtomicInteger atomInt) {
+		NEXT_ID = atomInt;
+	} 
+
+
+		
+}
