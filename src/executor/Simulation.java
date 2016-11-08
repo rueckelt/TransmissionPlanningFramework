@@ -489,7 +489,7 @@ public class Simulation {
 		ArrayList<String> verf_false = new ArrayList<String>();
 
 		boolean dependence = false;
-		boolean plotBool = false;
+		boolean plotBool = true;
 		boolean others = true;
 		boolean logConv = false;
 		float strength = (float) 0.4; //5.0 yes, 10.0 - no
@@ -499,7 +499,7 @@ public class Simulation {
 		int netNum = 8;
 		String uncertainty = "RealNetworkUncertainty";
 		int simTime = 100;
-		double pctg = 1.0;
+		double pctg = 1.0; // the factor for population size
 		String folder_out_root = "08_11_Accuracy" + flowNum + "_n" + netNum + "_t" + simTime + File.separator + uncertainty + File.separator + strength + "_" + offset   + File.separator;// stren_add + "_" + stren_cont + "_" + timesteps + File.separator;
 		String log_name = "";
 		int group = 30; // the number of repetitions
@@ -518,18 +518,18 @@ public class Simulation {
 			log_name = "";
 
 		/******************Network Flow Initial*****************************************/
-			NetworkGenerator ngReal = new NetworkGenerator();//(3, 30); //(3,30);
-			ngReal.addNetwork(Network.getCellular(100, 80, fix));
-			ngReal.addNetwork(Network.getCellular(100, 80, fix));
-			ngReal.addNetwork(Network.getWiFi(20, 55, 20, fix)); // 85
-			ngReal.addNetwork(Network.getWiFi(30, 65, 30, fix));
-			ngReal.addNetwork(Network.getWiFi(30, 55, 40, fix)); // 85
-			ngReal.addNetwork(Network.getWiFi(20, 65, 50, fix));
-			ngReal.addNetwork(Network.getWiFi(30, 55, 50, fix)); // 85
-			ngReal.addNetwork(Network.getWiFi(30, 65, 70, fix));
+			NetworkGenerator ngReal = new NetworkGenerator(8, simTime);//(3, 30); //(3,30);
+//			ngReal.addNetwork(Network.getCellular(100, 80, fix));
+//			ngReal.addNetwork(Network.getCellular(100, 80, fix));
+//			ngReal.addNetwork(Network.getWiFi(20, 55, 20, fix)); // 85
+//			ngReal.addNetwork(Network.getWiFi(30, 65, 30, fix));
+//			ngReal.addNetwork(Network.getWiFi(30, 55, 40, fix)); // 85
+//			ngReal.addNetwork(Network.getWiFi(20, 65, 50, fix));
+//			ngReal.addNetwork(Network.getWiFi(30, 55, 50, fix)); // 85
+//			ngReal.addNetwork(Network.getWiFi(30, 65, 70, fix));
 		
 		//////////System.out.println("*************************");
-			FlowGenerator tg = new FlowGenerator(100, 8);
+			FlowGenerator tg = new FlowGenerator(simTime, 8);
 
 			NetworkGenerator ngRealClone = ngReal.clone();
 			FlowGenerator tgClone = new FlowGenerator();
