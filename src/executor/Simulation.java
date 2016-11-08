@@ -498,7 +498,7 @@ public class Simulation {
 		int flowNum = 8;
 		int netNum = 8;
 		String uncertainty = "RealNetworkUncertainty";
-		int simTime = 100;
+		int simTime = 20;
 		double pctg = 1.0;
 		String folder_out_root = "08_11_Accuracy" + flowNum + "_n" + netNum + "_t" + simTime + File.separator + uncertainty + File.separator + strength + "_" + offset   + File.separator;// stren_add + "_" + stren_cont + "_" + timesteps + File.separator;
 		String log_name = "";

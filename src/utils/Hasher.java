@@ -33,8 +33,13 @@ public class Hasher {
 		}
 		return hm;
 	}
-	
+	/*
 	public static int[] mapToList (HashMap<Integer, List<Integer>> map) {
+		for(int key :map.keySet()){
+			List<Integer> list = map.get(key);
+		}
+		
+		
 	    Iterator it = map.entrySet().iterator();
 	    int sumNum = 0;
 	    while (it.hasNext()) {
@@ -57,7 +62,7 @@ public class Hasher {
 	    //Printer.printInt(result);
 	    return result;   
 	}
-	
+	*/
 	public static void main(String[] args) {
 		int[] comb = {1, 2, 2, 3, 3};
 		////////System.out.println(Hasher.listToMap(comb).toString());
