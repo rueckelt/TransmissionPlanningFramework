@@ -39,6 +39,7 @@ public class OptimizationScheduler extends Scheduler {
 		writeDatFile(logpath);
 				
 		ModelExecutor me = new ModelExecutor(MODELDIR+model);
+		System.out.println("OPT getting data from : "+dataset_path+", logging to "+logpath);
 		me.execute(dataset_path, logpath);
 		
 		//does not use the "allocate" function, but set schedule from optimization directly

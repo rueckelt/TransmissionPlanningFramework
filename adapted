@@ -1,1 +1,1 @@
-{"config":{"flowNum":"8","timeSlotNum":100,"netNum":8},"schedulePlan":[{"flowId":1,"plan":[]},{"flowId":2,"plan":[]},{"flowId":3,"plan":[]},{"flowId":4,"plan":[]},{"flowId":5,"plan":[]},{"flowId":6,"plan":[]},{"flowId":7,"plan":[]},{"flowId":8,"plan":[]}]}
+{"config":{"flowNum":"8","timeSlotNum":10,"netNum":8},"schedulePlan":[{"flowId":1,"plan":[]},{"flowId":2,"plan":[]},{"flowId":3,"plan":[]},{"flowId":4,"plan":[]},{"flowId":5,"plan":[]},{"flowId":6,"plan":[]},{"flowId":7,"plan":[]},{"flowId":8,"plan":[]}]}

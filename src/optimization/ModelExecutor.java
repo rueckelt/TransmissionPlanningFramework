@@ -97,6 +97,7 @@ public class ModelExecutor {
 //		load data
 		timeMap = new HashMap<String, Integer>();
 
+		System.out.println(datasource_file);
 		time=System.nanoTime();
 		IloOplDataSource dataSource = oplF.createOplDataSource(datasource_file);
 

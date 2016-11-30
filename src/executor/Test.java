@@ -49,7 +49,7 @@ public class Test {
 			String date = formatter.format(Calendar.getInstance().getTime());
 			////////System.out.println(" "+scheduler.getType() + ", starting at "+date);
 
-			scheduler.calculateInstance(logpath, true);
+			scheduler.calculateInstance(logpath, false);
 			JsonLogger.array2Json(scheduler.getSchedule(), path + i);
 			i++;
 			if (scheduler.getType().equals("GreedyOnlineOpp_0_H2")) {
