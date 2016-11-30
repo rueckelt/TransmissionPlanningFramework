@@ -1,0 +1,196 @@
+% This file was created by matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{1.00000,0.00000,1.00000}%
+\definecolor{mycolor2}{rgb}{0.00000,1.00000,1.00000}%
+\definecolor{mycolor3}{rgb}{1.00000,1.00000,0.00000}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+xmin=0,
+xmax=6,
+xtick={0,1,2,3,4,5,6},
+xticklabels={{},{0.1},{0.2},{0.3},{0.4},{0.5},{},{}},
+xlabel={Network Uncertainty: Prediction Error},
+separate axis lines,
+every outer y axis line/.append style={white!85!black},
+every y tick label/.append style={font=\color{white!85!black}},
+ymode=log,
+ymin=94133.5338616266,
+ymax=3463830.99253664,
+ylabel={cost function value},
+ymajorgrids,
+axis background/.style={fill=white}
+]
+\addplot [color=black,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	194741.366666667	63791.1457149989	63791.1457149989\\
+2	233436.466666667	98390.4256503085	98390.4256503085\\
+3	218335.166666667	83517.7057415904	83517.7057415904\\
+4	233659.4	77627.3916791403	77627.3916791403\\
+5	287034.6	182441.784598193	182441.784598193\\
+};
+\addplot [color=mycolor1,dashed,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	652171.633333333	137439.308890017	137439.308890017\\
+2	657113.4	153965.984698915	153965.984698915\\
+3	652839.933333333	169741.321512261	169741.321512261\\
+4	653356.2	125648.674316498	125648.674316498\\
+5	726319.3	221650.470627089	221650.470627089\\
+};
+\addplot [color=blue,dashdotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	790869.1	206457.174204297	206457.174204297\\
+2	841264.1	197234.166833293	197234.166833293\\
+3	779420.8	196163.436352853	196163.436352853\\
+4	832042.9	230209.5764988	230209.5764988\\
+5	887965.4	262618.906868819	262618.906868819\\
+};
+\addplot [color=red,dotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	523064.7	206855.319155547	206855.319155547\\
+2	559126.066666667	210646.656320473	210646.656320473\\
+3	592598	189553.507124681	189553.507124681\\
+4	551742	136920.003569481	136920.003569481\\
+5	633473.233333333	385513.418794528	385513.418794528\\
+};
+\addplot [color=green,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	1217077.43333333	229272.469912501	229272.469912501\\
+2	1270832	303467.658885863	303467.658885863\\
+3	1241210.63333333	294222.707689768	294222.707689768\\
+4	1225309.93333333	217913.201620421	217913.201620421\\
+5	1439785.8	381814.019626432	381814.019626432\\
+};
+\addplot [color=mycolor2,dashed,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	1217077.43333333	229272.469912501	229272.469912501\\
+2	1270832	303467.658885863	303467.658885863\\
+3	1241210.63333333	294222.707689768	294222.707689768\\
+4	1225309.93333333	217913.201620421	217913.201620421\\
+5	1439785.8	381814.019626432	381814.019626432\\
+};
+\addplot [color=mycolor3,dashdotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	871971.966666667	607152.222723126	607152.222723126\\
+2	1038346.66666667	719871.309520451	719871.309520451\\
+3	945230.633333333	335245.582750962	335245.582750962\\
+4	1125466.36666667	397753.862071213	397753.862071213\\
+5	1433309.5	515218.893099218	515218.893099218\\
+};
+\addplot [color=black,dotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	2177699.46666667	572897.635035832	572897.635035832\\
+2	2286456.6	571169.873508375	571169.873508375\\
+3	2120250.86666667	472727.804826395	472727.804826395\\
+4	2237395.1	566262.874512615	566262.874512615\\
+5	2374125.1	774812.165942402	774812.165942402\\
+};
+\end{axis}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmin=0,
+xmax=6,
+xtick={0,1,2,3,4,5,6},
+xticklabels={{},{0.1},{0.2},{0.3},{0.4},{0.5},{},{}},
+xlabel={Network Uncertainty: Prediction Error},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+ymode=log,
+ymin=94133.5338616266,
+ymax=3463830.99253664,
+ylabel={cost function value}
+]
+\addplot [color=black,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	194741.366666667	63791.1457149989	63791.1457149989\\
+2	233436.466666667	98390.4256503085	98390.4256503085\\
+3	218335.166666667	83517.7057415904	83517.7057415904\\
+4	233659.4	77627.3916791403	77627.3916791403\\
+5	287034.6	182441.784598193	182441.784598193\\
+};
+\addplot [color=mycolor1,dashed,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	652171.633333333	137439.308890017	137439.308890017\\
+2	657113.4	153965.984698915	153965.984698915\\
+3	652839.933333333	169741.321512261	169741.321512261\\
+4	653356.2	125648.674316498	125648.674316498\\
+5	726319.3	221650.470627089	221650.470627089\\
+};
+\addplot [color=blue,dashdotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	790869.1	206457.174204297	206457.174204297\\
+2	841264.1	197234.166833293	197234.166833293\\
+3	779420.8	196163.436352853	196163.436352853\\
+4	832042.9	230209.5764988	230209.5764988\\
+5	887965.4	262618.906868819	262618.906868819\\
+};
+\addplot [color=red,dotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	523064.7	206855.319155547	206855.319155547\\
+2	559126.066666667	210646.656320473	210646.656320473\\
+3	592598	189553.507124681	189553.507124681\\
+4	551742	136920.003569481	136920.003569481\\
+5	633473.233333333	385513.418794528	385513.418794528\\
+};
+\addplot [color=green,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	1217077.43333333	229272.469912501	229272.469912501\\
+2	1270832	303467.658885863	303467.658885863\\
+3	1241210.63333333	294222.707689768	294222.707689768\\
+4	1225309.93333333	217913.201620421	217913.201620421\\
+5	1439785.8	381814.019626432	381814.019626432\\
+};
+\addplot [color=mycolor2,dashed,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	1217077.43333333	229272.469912501	229272.469912501\\
+2	1270832	303467.658885863	303467.658885863\\
+3	1241210.63333333	294222.707689768	294222.707689768\\
+4	1225309.93333333	217913.201620421	217913.201620421\\
+5	1439785.8	381814.019626432	381814.019626432\\
+};
+\addplot [color=mycolor3,dashdotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	871971.966666667	607152.222723126	607152.222723126\\
+2	1038346.66666667	719871.309520451	719871.309520451\\
+3	945230.633333333	335245.582750962	335245.582750962\\
+4	1125466.36666667	397753.862071213	397753.862071213\\
+5	1433309.5	515218.893099218	515218.893099218\\
+};
+\addplot [color=black,dotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	2177699.46666667	572897.635035832	572897.635035832\\
+2	2286456.6	571169.873508375	571169.873508375\\
+3	2120250.86666667	472727.804826395	472727.804826395\\
+4	2237395.1	566262.874512615	566262.874512615\\
+5	2374125.1	774812.165942402	774812.165942402\\
+};
+\end{axis}
+\end{tikzpicture}%
