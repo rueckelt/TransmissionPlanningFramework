@@ -1,32 +1,27 @@
-function dan_tikz_out_errorbar(filename, data, my_ylabel, legendlabels, style_skip, logscale, zeroline, time0_net1)
+function dan_tikz_out_errorbar_mean(filename, data, my_ylabel, legendlabels, style_skip, logscale, zeroline, time0_net1)
 %filename for export
 %data is matrix with dimensions (scheduler, time, repetitions)
 %ylabel is string
-
-p=25;
 
 %CREATEFIGURE(YMATRIX1, EMATRIX1)
 %  YMATRIX1:  errorbar y matrix
 %  EMATRIX1:  errorbar e matrix
 size(data)
-YMatrix1=median(data, 3)';%mean(data,3)';
-EMatrix1bot=prctile(data, p,3)' -YMatrix1 %std(data,1,3)';
-EMatrix1top=YMatrix1-prctile(data, 100-p,3)' %std(data,1,3)';
+YMatrix1=mean(data,3)';
+EMatrix1=std(data,1,3)';
 %EMatrix1=zeros(30,2)
 
 y_lim_margin=0.1;
 %neg=YMatrix1-EMatrix1
 [dim1, dim2]=size(YMatrix1)
-x=repmat(1:dim1, dim2, 1)'
-
 % Create figure
 figure1 = figure('visible', 'on');
 linestyles = {'-','--','-.',':'};
-linecolors = {'black','magenta','blue','red','green','cyan'};
+linecolors = {'black','magenta','blue','red','green','cyan','yellow'};
 %colors = [0,0,0; 0,0,1; 0,1,0; 1,0,0; 0,1,1; 1,0,1; 1,1,0]; %same colors in rgb
 % Create axes
 if time0_net1==0
-    uncertainty_strength={'','0.1','','0.2','', '0.3','','0.4','', '0.5',''};
+    uncertainty_strength={'','0.1','0.2', '0.3','0.4', '0.5','', ''};
     axes1 = axes('Parent',figure1,'YMinorTick','on',...%'YScale','log',...
         'XTickLabel',uncertainty_strength);
 else
@@ -37,15 +32,14 @@ end
 hold(axes1,'on');
 
 % Create multiple error bars using matrix input to errorbar
-%errorbar1 = errorbar(YMatrix1,EMatrix1,'LineWidth',1.5);
-errorbar1 = errorbar(x,YMatrix1,EMatrix1bot, EMatrix1top,'LineWidth',1.5);
+errorbar1 = errorbar(YMatrix1,EMatrix1,'LineWidth',1.5);
 errorbar1(1)
 errorbar1(2)
 %errorbar(YMatrix1,EMatrix1,'LineWidth',1.5)
 for i=1:dim2
     dim2
     set(errorbar1(i),'DisplayName',legendlabels{i},'LineStyle',linestyles{mod(i-1+style_skip,4)+1},...)
-        'Color',linecolors{mod(i-1+style_skip,6)+1});
+        'Color',linecolors{mod(i-1+style_skip,7)+1});
 end
 
 if logscale>0
@@ -71,10 +65,10 @@ end
 ylabel(my_ylabel);
 
 %set y-limits of plot to 10% margin
-y_lim=[ min(min(YMatrix1-EMatrix1bot))-y_lim_margin*abs(min(min(YMatrix1-EMatrix1bot))),...
-        max(max(YMatrix1+EMatrix1top))+y_lim_margin*abs(max(max(YMatrix1+EMatrix1top)))];
+y_lim=[ min(min(YMatrix1-EMatrix1))-0.1*abs(min(min(YMatrix1-EMatrix1))),...
+        max(max(YMatrix1+EMatrix1))+y_lim_margin*abs(max(max(YMatrix1+EMatrix1)))];
 if ~isnan(y_lim)
-   %set(gca,'ylim',y_lim);
+    set(gca,'ylim',y_lim);
 end
 
 % Create legend

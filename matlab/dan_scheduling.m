@@ -8,7 +8,7 @@ in_folder = '../08_11_Accuracy8_n8_t100/CombinedUncertainty';% 'logs_time';
 %in_folder = '../20_11_Converge/GA2';% 'logs_time';
 
 out_folder = [in_folder filesep 'tikz_t_big'];
-force_read_data = 1;
+force_read_data = 0;
 max_only=0;
 
 
