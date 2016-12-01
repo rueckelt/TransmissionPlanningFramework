@@ -60,7 +60,7 @@ public class GreedyOnlineScheduler extends GreedyScheduler {
 					while(allocated==0 && n0<ng.getNetworks().size()){
 						int n=flowsToNets.get(f).get(n0);
 						//oppertunistic scheduling: use benefit estimation to decide whether to use network or not
-						if(scheduleDecision(flow, n)){
+						if(scheduleDecision(f, n, t)){
 							if(chunksToAllocate.get(f)<chunksMaxTp){
 								allocated=allocate(f, t, n, chunksToAllocate.get(f)); //do not allocate more chunks than required
 							}else{
@@ -82,7 +82,7 @@ public class GreedyOnlineScheduler extends GreedyScheduler {
 	}
 
 
-	protected boolean scheduleDecision(Flow flow, int n) {
+	protected boolean scheduleDecision(int f, int n, int t) {
 		return true;
 	}
 
