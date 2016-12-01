@@ -3,7 +3,8 @@ function dan_tikz_out_errorbar(filename, data, my_ylabel, legendlabels, style_sk
 %data is matrix with dimensions (scheduler, time, repetitions)
 %ylabel is string
 
-p=25;
+%p=25;
+p=10;
 
 %CREATEFIGURE(YMATRIX1, EMATRIX1)
 %  YMATRIX1:  errorbar y matrix
@@ -78,7 +79,7 @@ if ~isnan(y_lim)
 end
 
 % Create legend
-legend1 = legend(axes1,'show', 'Location','northwest');
+legend1 = legend(axes1,'show', 'Location','southwest');
 set(gca,...
     'YMinorTick','off',...
     'YGrid','on',...

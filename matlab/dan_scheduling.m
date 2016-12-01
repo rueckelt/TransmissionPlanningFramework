@@ -4,10 +4,14 @@
 %delete this file to read logs from raw files
 
 in_folder = '../08_11_Accuracy8_n8_t100/CombinedUncertainty';% 'logs_time';
+%in_folder = '../08_11_Accuracy8_n8_t100/RealNetworkUncertainty';% 'logs_time';
+%in_folder = '../08_11_Accuracy8_n8_t100/RealPositionNetworkUncertainty';% 'logs_time';
+%in_folder = '../08_11_Accuracy8_n8_t100/RealFlowUncertainty';% 'logs_time';
+
 %in_folder = '..\my_logs\eval_4_4_3_c10';% 'logs_time';
 %in_folder = '../20_11_Converge/GA2';% 'logs_time';
 
-out_folder = [in_folder filesep 'tikz_t_big'];
+out_folder = [in_folder filesep '10p'];
 force_read_data = 0;
 max_only=0;
 
@@ -43,6 +47,7 @@ else
     valuestrings = { 'costTotal','scheduling_duration_us', 'sum(vioSt)+sum(vioDl)', ...
         'sum(vioTp)', 'sum(vioNon)', 'sum(vioLcy)+sum(vioJit)', 'cost_ch'};
     tic
+    max_time=5
     [raw_values, avail] = dan_readValuesFromFiles( in_folder, valuestrings,...
         max_time, max_nets, max_flows, max_rep, scheduler_logs, max_only);
     toc

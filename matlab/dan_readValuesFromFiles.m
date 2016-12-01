@@ -32,7 +32,7 @@ function [values, avail] = dan_readValuesFromFiles( in_folder, varnames, t_max, 
         for t = t_start:t_max
             for n = n_start:n_max
                 for rep=1:rep_max
-                   folders_names={'0.5_0.0', '0.2_0.0', '0.3_0.0', '0.4_0.0','0.5_0.0'};
+                   folders_names={'0.1_0.0', '0.2_0.0', '0.3_0.0', '0.4_0.0','0.5_0.0'};
                    %folders_names={'time_0', 'time_1','time_2', 'time_3','time_4', 'time_5','time_6', 'time_7', 'time_8', 'time_9','time_10', 'time_11','time_12', 'time_13','time_14', 'time_15','time_16', 'time_17','time_18', 'time_19','time_20', 'time_21','time_22', 'time_23','time_24', 'time_25','time_26', 'time_27','time_28', 'time_29'};
 
                    in_path = [in_folder filesep folders_names{t} filesep 'rep_' num2str(rep-1) filesep]
