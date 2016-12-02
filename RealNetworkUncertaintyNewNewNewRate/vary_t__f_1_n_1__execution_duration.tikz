@@ -1,0 +1,232 @@
+% This file was created by matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{1.00000,0.00000,1.00000}%
+\definecolor{mycolor2}{rgb}{0.00000,1.00000,1.00000}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+xmin=0,
+xmax=12,
+xtick={0,2,4,6,8,10,12},
+xticklabels={{},{0.1},{},{0.2},{},{0.3},{},{0.4},{},{0.5},{}},
+xlabel={Combined Uncertainty: Prediction Error},
+separate axis lines,
+every outer y axis line/.append style={white!85!black},
+every y tick label/.append style={font=\color{white!85!black}},
+ymode=log,
+ymin=0.001,
+ymax=100,
+ylabel={execution duration in s},
+ymajorgrids,
+axis background/.style={fill=white},
+legend style={at={(0.03,0.03)},anchor=south west,legend cell align=left,align=left,draw=white!15!black}
+]
+\addplot [color=black,solid,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	26.230348	0	0\\
+2	7.430934	0	0\\
+3	2.038642	0	0\\
+4	32.767777	0	0\\
+5	14.231845	0	0\\
+6	33.419923	0	0\\
+7	13.948473	0	0\\
+8	29.272407	0	0\\
+9	20.664233	0	0\\
+10	20.557879	0	0\\
+};
+\addlegendentry{Optimal};
+
+\addplot [color=mycolor1,dashed,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.298347	0	0\\
+2	0.18617	0	0\\
+3	0.287679	0	0\\
+4	0.154551	0	0\\
+5	0.170004	0	0\\
+6	0.361689	0	0\\
+7	0.290013	0	0\\
+8	0.132122	0	0\\
+9	0.175875	0	0\\
+10	0.180164	0	0\\
+};
+\addlegendentry{GA(True)};
+
+\addplot [color=blue,dashdotted,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.298347	0	0\\
+2	0.18617	0	0\\
+3	0.287679	0	0\\
+4	0.154551	0	0\\
+5	0.170004	0	0\\
+6	0.361689	0	0\\
+7	0.290013	0	0\\
+8	0.132122	0	0\\
+9	0.175875	0	0\\
+10	0.180164	0	0\\
+};
+\addlegendentry{GA(False)};
+
+\addplot [color=red,dotted,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.024155	0	0\\
+2	0.006197	0	0\\
+3	0.003199	0	0\\
+4	0.003861	0	0\\
+5	0.002367	0	0\\
+6	0.003268	0	0\\
+7	0.002747	0	0\\
+8	0.002675	0	0\\
+9	0.002642	0	0\\
+10	0.002409	0	0\\
+};
+\addlegendentry{Greedy};
+
+\addplot [color=green,solid,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.029494	0	0\\
+2	0.007472	8.67361737988404e-19	-8.67361737988404e-19\\
+3	0.003833	0	0\\
+4	0.003865	0	0\\
+5	0.002978	0	0\\
+6	0.003774	4.33680868994202e-19	-4.33680868994202e-19\\
+7	0.003498	4.33680868994202e-19	-4.33680868994202e-19\\
+8	0.003754	0	0\\
+9	0.003168	0	0\\
+10	0.003093	0	0\\
+};
+\addlegendentry{GreedyOnline};
+
+\addplot [color=mycolor2,dashed,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.016631	0	0\\
+2	0.005311	0	0\\
+3	0.002863	0	0\\
+4	0.002936	0	0\\
+5	0.002597	0	0\\
+6	0.002565	0	0\\
+7	0.002471	0	0\\
+8	0.004213	0	0\\
+9	0.002333	0	0\\
+10	0.00264	0	0\\
+};
+\addlegendentry{GreedyOnlineOpp};
+
+\end{axis}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmin=0,
+xmax=12,
+xtick={0,2,4,6,8,10,12},
+xticklabels={{},{0.1},{},{0.2},{},{0.3},{},{0.4},{},{0.5},{}},
+xlabel={Combined Uncertainty: Prediction Error},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+ymode=log,
+ymin=0.001,
+ymax=100,
+ylabel={execution duration in s}
+]
+\addplot [color=black,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	26.230348	0	0\\
+2	7.430934	0	0\\
+3	2.038642	0	0\\
+4	32.767777	0	0\\
+5	14.231845	0	0\\
+6	33.419923	0	0\\
+7	13.948473	0	0\\
+8	29.272407	0	0\\
+9	20.664233	0	0\\
+10	20.557879	0	0\\
+};
+\addplot [color=mycolor1,dashed,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.298347	0	0\\
+2	0.18617	0	0\\
+3	0.287679	0	0\\
+4	0.154551	0	0\\
+5	0.170004	0	0\\
+6	0.361689	0	0\\
+7	0.290013	0	0\\
+8	0.132122	0	0\\
+9	0.175875	0	0\\
+10	0.180164	0	0\\
+};
+\addplot [color=blue,dashdotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.298347	0	0\\
+2	0.18617	0	0\\
+3	0.287679	0	0\\
+4	0.154551	0	0\\
+5	0.170004	0	0\\
+6	0.361689	0	0\\
+7	0.290013	0	0\\
+8	0.132122	0	0\\
+9	0.175875	0	0\\
+10	0.180164	0	0\\
+};
+\addplot [color=red,dotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.024155	0	0\\
+2	0.006197	0	0\\
+3	0.003199	0	0\\
+4	0.003861	0	0\\
+5	0.002367	0	0\\
+6	0.003268	0	0\\
+7	0.002747	0	0\\
+8	0.002675	0	0\\
+9	0.002642	0	0\\
+10	0.002409	0	0\\
+};
+\addplot [color=green,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.029494	0	0\\
+2	0.007472	8.67361737988404e-19	-8.67361737988404e-19\\
+3	0.003833	0	0\\
+4	0.003865	0	0\\
+5	0.002978	0	0\\
+6	0.003774	4.33680868994202e-19	-4.33680868994202e-19\\
+7	0.003498	4.33680868994202e-19	-4.33680868994202e-19\\
+8	0.003754	0	0\\
+9	0.003168	0	0\\
+10	0.003093	0	0\\
+};
+\addplot [color=mycolor2,dashed,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	0.016631	0	0\\
+2	0.005311	0	0\\
+3	0.002863	0	0\\
+4	0.002936	0	0\\
+5	0.002597	0	0\\
+6	0.002565	0	0\\
+7	0.002471	0	0\\
+8	0.004213	0	0\\
+9	0.002333	0	0\\
+10	0.00264	0	0\\
+};
+\end{axis}
+\end{tikzpicture}%

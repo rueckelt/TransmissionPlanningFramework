@@ -1,0 +1,232 @@
+% This file was created by matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{1.00000,0.00000,1.00000}%
+\definecolor{mycolor2}{rgb}{0.00000,1.00000,1.00000}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+xmin=0,
+xmax=12,
+xtick={0,2,4,6,8,10,12},
+xticklabels={{},{0.1},{},{0.2},{},{0.3},{},{0.4},{},{0.5},{}},
+xlabel={Combined Uncertainty: Prediction Error},
+separate axis lines,
+every outer y axis line/.append style={white!85!black},
+every y tick label/.append style={font=\color{white!85!black}},
+ymode=log,
+ymin=10000,
+ymax=1000000,
+ylabel={cost function value},
+ymajorgrids,
+axis background/.style={fill=white},
+legend style={at={(0.03,0.03)},anchor=south west,legend cell align=left,align=left,draw=white!15!black}
+]
+\addplot [color=black,solid,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	70174	0	0\\
+2	144499	0	0\\
+3	64191	0	0\\
+4	47418	0	0\\
+5	206904	0	0\\
+6	120692	0	0\\
+7	114165	0	0\\
+8	58790	0	0\\
+9	122845	0	0\\
+10	105486	0	0\\
+};
+\addlegendentry{Optimal};
+
+\addplot [color=mycolor1,dashed,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	390572	0	0\\
+2	325668	0	0\\
+3	283073	0	0\\
+4	143210	0	0\\
+5	296447	0	0\\
+6	338149	0	0\\
+7	264735	0	0\\
+8	644340	0	0\\
+9	304845	0	0\\
+10	444974	0	0\\
+};
+\addlegendentry{GA(True)};
+
+\addplot [color=blue,dashdotted,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	150143	0	0\\
+2	216683	0	0\\
+3	97911	0	0\\
+4	130612	0	0\\
+5	319617	0	0\\
+6	174421	0	0\\
+7	166686	0	0\\
+8	135678	0	0\\
+9	247345	0	0\\
+10	272300	0	0\\
+};
+\addlegendentry{GA(False)};
+
+\addplot [color=red,dotted,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	313820	0	0\\
+2	274828	0	0\\
+3	106677	0	0\\
+4	129404	0	0\\
+5	440344	0	0\\
+6	203969	0	0\\
+7	238137	0	0\\
+8	278839	0	0\\
+9	198875	0	0\\
+10	342358	0	0\\
+};
+\addlegendentry{Greedy};
+
+\addplot [color=green,solid,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	378360	0	0\\
+2	538682	0	0\\
+3	460807	0	0\\
+4	341066	0	0\\
+5	434007	0	0\\
+6	419170	0	0\\
+7	361674	0	0\\
+8	382030	0	0\\
+9	489550	0	0\\
+10	288363	0	0\\
+};
+\addlegendentry{GreedyOnline};
+
+\addplot [color=mycolor2,dashed,line width=1.5pt]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	163738	0	0\\
+2	173921	0	0\\
+3	150989	0	0\\
+4	96743	0	0\\
+5	413920	0	0\\
+6	208002	0	0\\
+7	190586	0	0\\
+8	102597	0	0\\
+9	212382	0	0\\
+10	199648	0	0\\
+};
+\addlegendentry{GreedyOnlineOpp};
+
+\end{axis}
+
+\begin{axis}[%
+width=0.951\figW,
+height=\figH,
+at={(0\figW,0\figH)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+xmin=0,
+xmax=12,
+xtick={0,2,4,6,8,10,12},
+xticklabels={{},{0.1},{},{0.2},{},{0.3},{},{0.4},{},{0.5},{}},
+xlabel={Combined Uncertainty: Prediction Error},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+ymode=log,
+ymin=10000,
+ymax=1000000,
+ylabel={cost function value}
+]
+\addplot [color=black,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	70174	0	0\\
+2	144499	0	0\\
+3	64191	0	0\\
+4	47418	0	0\\
+5	206904	0	0\\
+6	120692	0	0\\
+7	114165	0	0\\
+8	58790	0	0\\
+9	122845	0	0\\
+10	105486	0	0\\
+};
+\addplot [color=mycolor1,dashed,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	390572	0	0\\
+2	325668	0	0\\
+3	283073	0	0\\
+4	143210	0	0\\
+5	296447	0	0\\
+6	338149	0	0\\
+7	264735	0	0\\
+8	644340	0	0\\
+9	304845	0	0\\
+10	444974	0	0\\
+};
+\addplot [color=blue,dashdotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	150143	0	0\\
+2	216683	0	0\\
+3	97911	0	0\\
+4	130612	0	0\\
+5	319617	0	0\\
+6	174421	0	0\\
+7	166686	0	0\\
+8	135678	0	0\\
+9	247345	0	0\\
+10	272300	0	0\\
+};
+\addplot [color=red,dotted,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	313820	0	0\\
+2	274828	0	0\\
+3	106677	0	0\\
+4	129404	0	0\\
+5	440344	0	0\\
+6	203969	0	0\\
+7	238137	0	0\\
+8	278839	0	0\\
+9	198875	0	0\\
+10	342358	0	0\\
+};
+\addplot [color=green,solid,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	378360	0	0\\
+2	538682	0	0\\
+3	460807	0	0\\
+4	341066	0	0\\
+5	434007	0	0\\
+6	419170	0	0\\
+7	361674	0	0\\
+8	382030	0	0\\
+9	489550	0	0\\
+10	288363	0	0\\
+};
+\addplot [color=mycolor2,dashed,line width=1.5pt,forget plot]
+ plot [error bars/.cd, y dir = both, y explicit]
+ table[row sep=crcr, y error plus index=2, y error minus index=3]{%
+1	163738	0	0\\
+2	173921	0	0\\
+3	150989	0	0\\
+4	96743	0	0\\
+5	413920	0	0\\
+6	208002	0	0\\
+7	190586	0	0\\
+8	102597	0	0\\
+9	212382	0	0\\
+10	199648	0	0\\
+};
+\end{axis}
+\end{tikzpicture}%
